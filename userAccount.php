@@ -1,7 +1,7 @@
 	<!------------->
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-		<span class="hidden-xs">Alexander Pierce</span>
+		<span class="hidden-xs"><?php   echo $user; ?></span>
     </a>
 	
 	<!------user-dropdown------->
@@ -11,8 +11,15 @@
             <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
             <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                 <?php
+					echo $user;
+				 ?>
+					<small>
+						<?php 
+							$results=getUserFullDept($db_link,$_SESSION['fmsuser']);
+							echo $results;
+						?>
+					</small>
                 </p>
         </li>
 			  
@@ -22,10 +29,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="userProfile.php" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="index.php?log=off" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
     </ul>

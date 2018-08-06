@@ -1,7 +1,14 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>FMS</title>
+  
+  	<?php
+		session_start();
+		include('db_connect/db_connect.php');
+		$db_link=db_connect();
+		
+	?>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -24,7 +31,10 @@
   <!-- Daterange picker -->
   <link rel="stylesheet" href="assets/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+	<link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+	<link rel="stylesheet" href="assets/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,3 +46,21 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+
+<?php 
+	if(!isset($_SESSION['fmsuser'])){
+		if(isset($page)){
+			if($page=="login"){
+				
+			}
+			else{
+				header("Location: index.php?log=off");
+				
+			}
+		}
+		else{
+			header("Location: index.php?log=off");
+		}
+	} 
+
+?>

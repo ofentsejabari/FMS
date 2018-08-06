@@ -1,51 +1,88 @@
-<!DOCTYPE html>
-<html>
-	<?php include("headers.php");	?>
-<body class="hold-transition skin-blue sidebar-mini">
-	<div class="wrapper">
+<?php
+			$page="login";
+			include("headers.php");
 			
-			<!--top-navigation-------->	
-				<?php include("topNav.php"); ?>
-			<!-- Left side column. contains the logo and sidebar -->
-				<?php include("sideNav.php");?>
-			<!-- Content Wrapper. Contains page content -->
-			<div class="content-wrapper">
-				<!-- Content Header (Page header) -->
-				<section class="content-header">
-				  <h1>
-					Dashboard
-					<small>Control panel</small>
-				  </h1>
-				  <ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Dashboard</li>
-				  </ol>
-				</section>
-
-				<!-- Main content -->
-				<section class="content">
-					<?php include("dashboard.php"); ?>
-				</section>
-					<!-- right col -->
-			</div>
-			  <!-- /.row (main row) -->
-
-			</section>
-			<!-- /.content -->
+			if(isset($_SESSION['fmsuser']) && $_SESSION['fmsuser']!="")
+			{	
+				if($_GET['log']=="off"){
+					session_unset(); 
+				}
+				else{
+					header("Location: home.php");
+				}	
+			}
+?>
 		
-		  <!-- /.content-wrapper -->
-		<?php include("footer.php"); ?>
+<body class="hold-transition login-page">
+	<div class="login-box">
 
-			<!-- Control Sidebar -->
-		<?php include("settings.php"); ?>
-			<!-- /.control-sidebar -->
-		  <!-- Add the sidebar's background. This div must be placed
-			   immediately after the control sidebar -->
-		<div class="control-sidebar-bg"></div>
+		<div class="login-logo">
+			<a href="#"><b>FMS</b></a>
+		</div>
+	  
+		<div class="login-box-body">
+			<p class="login-box-msg">Sign in</p>
+
+			<form  action="<?php echo $_SERVER['PHP_SELF'];?>" method="post" id="loginForm" >
+				<div class="form-group has-feedback">
+					<input type="text" id="username"name="username" class="form-control" placeholder="Username">
+					<span class="fa fa-user form-control-feedback"></span>
+				</div>
+				
+				<div class="form-group has-feedback">
+					<input type="password" id="userpassword" name="userpassword" class="form-control" placeholder="Password">
+					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
+				<div class="row">
+					<div class="col-xs-8">
+					  <div class="checkbox icheck">
+					  
+					  </div>
+					</div>
+					<!-- /.col -->
+					<div class="col-xs-4">
+					    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+					</div>
+					<!-- /.col -->
+				</div>
+			</form>
+
+			<!-- /.social-auth-links -->
+
+			<a href="#">forgot password?</a><br>
+
+		</div>
+	  <!-- /.login-box-body -->
 	</div>
-	<!-- ./wrapper -->
-
-		<?php include("scripts.php")?>
-
+		<?php
+				include("scripts.php");
+		?>
+	<script>
+		$('#loginForm').submit(function(event) {
+											$('#error').remove();					
+											var logindata = $(this).serialize();
+											//alert(logindata);
+											// process the form
+											$.ajax({
+												type        : 'GET', // define the type of HTTP verb we want to use (POST for our form)
+												url         : 'db_connect/authenticate.php', // the url where we want to POST
+												data        : logindata, // our data object
+												dataType    : 'json' // what type of data do we expect back from the server
+											}).done(function(data){
+												
+												if(data.success){
+													
+													window.location="home.php";
+													
+												}
+												else{
+													alert("error");
+													
+												}
+												
+											});
+											// stop the form from submitting the normal way and refreshing the page
+											event.preventDefault();
+			});
+	</script>
 </body>
-</html>
