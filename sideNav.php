@@ -8,7 +8,7 @@
 			  <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 			</div>
 			<div class="pull-left info">
-			  <p><?php echo $user; ?></p>
+			  <p><?php echo $_SESSION['fullname']; ?></p>
 			  <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 			</div>
 		  </div>
@@ -33,7 +33,7 @@
 					</span>
 				  </a>
 				  <ul class="treeview-menu">
-					<li class="<?php if($subpage=="orgdash"){echo 'active';} ?>"><a href="index.html"><i class="fa fa-circle-o text-red"></i>Organizational</a></li>
+					<li class="<?php if($subpage=="orgdash"){echo 'active';} ?>"><a href="home.php"><i class="fa fa-circle-o text-red"></i>Organizational</a></li>
 					<li><a href="index2.html"><i class="fa fa-circle-o text-green"></i>Fleet Tracker</a></li>
 				  </ul>
 				</li>
@@ -57,8 +57,8 @@
 				  </ul>
 				</li>
 			
-				<li>
-				  <a href="pages/widgets.html">
+				<li class="<?php if($page=="request"){echo 'active';} ?>">
+				  <a href="fleetrequests.php">
 					<i class="fa fa-th"></i> <span>Requests</span>
 					<span class="pull-right-container">
 					  <small class="label pull-right bg-green">12</small>

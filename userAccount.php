@@ -1,7 +1,7 @@
 	<!------------->
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-		<span class="hidden-xs"><?php   echo $user; ?></span>
+		<span class="hidden-xs"><?php   echo $_SESSION['fullname']; ?></span>
     </a>
 	
 	<!------user-dropdown------->
@@ -11,8 +11,8 @@
             <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
             <p>
-                 <?php
-					echo $user;
+                     <?php
+					echo $_SESSION['fullname'];
 				 ?>
 					<small>
 						<?php 

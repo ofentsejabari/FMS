@@ -37,5 +37,9 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 
-	<script src="assets/datatables.net/js/jquery.dataTables.min.js"></script>
+<!-- iCheck -->
+<script src="plugins/iCheck/icheck.min.js"></script>
+
+<!-- DataTables -->
+<script src="assets/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="assets/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>

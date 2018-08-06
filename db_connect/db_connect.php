@@ -757,15 +757,18 @@ function getRoleId($db_link,$user_id)
 	returns all requests ever made
 */
 function getRequestHistory($db_link){
-			$sql = "SELECT `vehicle_id`, 
-				CONCAT_WS(' ',`staff_firstname`,`staff_surname`),
-				`request_date`,`request`.`start_date`,
-			`end_date`,`request_destination`,`request_reason`,`request_level`,
-			`request_travellers`,`request_approver_id`
-			,`request_approval_date`,`request_id`,`request_rejectReason`,`request_view`,
-			`request_vehicle_transmission`,type_id,`request_cancelled`,`request`.`branch_id`
-			,`designation_id`,`dept_id`,`request_driver`
-		    FROM `request`,`staff`
+			$sql = "SELECT `vehicle_id`, CONCAT_WS(' ',`staff_firstname`,`staff_surname`)
+                        ,`request_date`,`request`.`start_date`
+                        ,`end_date`,`request_destination`
+                        ,`request_reason`,`request_level`
+                        ,`request_travellers`,`request_approver_id`
+			,`request_approval_date`,`request_id`
+                        ,`request_rejectReason`,`request_view`
+                        ,`request_vehicle_transmission`,type_id
+                        ,`request_cancelled`,`request`.`branch_id`
+			,`designation_id`,`dept_id`
+                        ,`request_driver`
+                        FROM `request`,`staff`
 			WHERE `staff`.`staff_id`=`request`.`staff_id` 
 			and (request_supervisor_date!='' || role_id=7 || role_id=5 || role_id=6 ) and request_supervisor_reason='' ORDER BY request_date DESC LIMIT 60 "  ;
 			$results  = mysqli_query($db_link,$sql);

@@ -2,7 +2,9 @@
 <html>
 	<?php 
 		include("headers.php");	
-		$user=getUserFull($db_link,$_SESSION['fmsuser']);
+		$_SESSION['fullname']=getUserFull($db_link,$_SESSION['fmsuser']);
+                $_SESSION['userrole']="";
+                
 		$page="dashboard";
 		$subpage="orgdash";
 	?>
