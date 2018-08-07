@@ -16,7 +16,7 @@
 				 ?>
 					<small>
 						<?php 
-							$results=getUserFullDept($db_link,$_SESSION['fmsuser']);
+							$results=getUserDesignation($db_link,$_SESSION['fmsuser']);
 							echo $results;
 						?>
 					</small>

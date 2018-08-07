@@ -59,30 +59,36 @@
 		?>
 	<script>
 		$('#loginForm').submit(function(event) {
-											$('#error').remove();					
-											var logindata = $(this).serialize();
-											//alert(logindata);
-											// process the form
-											$.ajax({
-												type        : 'GET', // define the type of HTTP verb we want to use (POST for our form)
-												url         : 'db_connect/authenticate.php', // the url where we want to POST
-												data        : logindata, // our data object
-												dataType    : 'json' // what type of data do we expect back from the server
-											}).done(function(data){
-												
-												if(data.success){
-													
-													window.location="home.php";
-													
-												}
-												else{
-													alert("error");
-													
-												}
-												
-											});
-											// stop the form from submitting the normal way and refreshing the page
-											event.preventDefault();
+			$('#error').remove();					
+			var logindata = $(this).serialize();
+			//alert(logindata);
+			// process the form
+			$.ajax({
+				type        : 'GET', // define the type of HTTP verb we want to use (POST for our form)
+				url         : 'db_connect/authenticate.php', // the url where we want to POST
+				data        : logindata, // our data object
+				dataType    : 'json' // what type of data do we expect back from the server
+			}).done(function(data){
+				
+				if(data.success){
+					
+					window.location="home.php";
+					
+				}
+                                else{
+                                        bootoast.toast({
+                                          message: 'This is a warning toast message',
+                                               type: 'warning',
+                                               position: 'top-center',
+                                                timeout: null,
+                                                animationDuration: 300,
+                                                dismissible: true
+                                        });
+				}
+				
+			});
+			// stop the form from submitting the normal way and refreshing the page
+			event.preventDefault();
 			});
 	</script>
 </body>
