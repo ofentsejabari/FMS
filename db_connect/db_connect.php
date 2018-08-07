@@ -39,6 +39,15 @@
         return false;
     }
     
+    //============================================ USER DETAILS ==========================================================
+    
+    /**
+     * 
+     * @param type $db_link
+     * @param type $staff_id
+     * @return type
+     */
+    
     
     function getUserFull($db_link,$staff_id)
     {
@@ -50,6 +59,61 @@
                     return $data[0];
             }
     }
+    
+    function getStaffDesignationById($db_link,$staff_id,$designation_id)
+    {
+            $sql="SELECT designation_name FROM designations,staff WHERE `designations`.`designation_id`='$designation_id' and `staff_id`='$staff_id'";
+            $results  = mysqli_query($db_link,$sql);
+            if(mysqli_num_rows($results))
+            {
+                    $data=mysqli_fetch_row($results);
+                    return $data[0];
+            }
+    }
+    
+    function getUserDesignation($db_link,$staff_id)
+    {
+	$sql="SELECT `designation_name`,`dept_name` FROM `designations`,`staff`,`department`"
+                . " WHERE staff_id='$staff_id' AND `department`.`dept_id`=`staff`.`dept_id` "
+                . " AND `designations`.`designation_id`=`staff`.`designation_id`";
+        
+	$results  = mysqli_query($db_link,$sql);
+	if(mysqli_num_rows($results))
+	{
+		$data=mysqli_fetch_row($results);
+		
+		return $data[1]."-".$data[0];
+	}
+    }
+    
+    function getRoleId($db_link,$user_id){
+	$query="SELECT `role_id` FROM `staff` WHERE `staff_id`=".$user_id;
+	$results  = mysqli_query($db_link,$query);
+	if(mysqli_num_rows($results))
+	{
+		$data=mysqli_fetch_row($results);
+		return $data[0];
+	}
+    }
+    
+    function getStaffProfile($db_link,$staff_id)
+    {
+            $sql="SELECT `staff_id`, `staff_username`, `staff_firstname`, `staff_surname`,`role_id`,
+             `staff_password`,`supervisor_id`,`dept_id`,`designation_id`,`staff_email`
+             FROM `staff` WHERE delete_status=0 
+             AND `staff_id`=".$staff_id;
+            
+            $results  = mysqli_query($db_link,$sql);
+            if($results){
+                    if(mysqli_num_rows($results))
+                    {
+                            return $results;
+                    }
+            }	
+    }
+    
+    //====================================== REQUEST DETAILS ========================================================
+    
     
     
     function getRequestHistory($db_link){
@@ -76,6 +140,8 @@
             }
     }
     
+    //====================================== BRANCH DETAILS ========================================================
+    
     function getBranchName($db_link,$branch_id){
         
             $query="SELECT `branch_name` FROM `branch` WHERE `branch_id`=".$branch_id;
@@ -88,21 +154,94 @@
 	
     }
     
-    function getUserDesignation($db_link,$staff_id)
-    {
-	$sql="SELECT `designation_name`,`dept_name` FROM `designations`,`staff`,`department`"
-                . " WHERE staff_id='$staff_id' AND `department`.`dept_id`=`staff`.`dept_id` "
-                . " AND `designations`.`designation_id`=`staff`.`designation_id`";
-        
+    //====================================== DEPARTMENT DETAILS ========================================================
+    
+   
+    /**
+     * 
+     * @param type $db_link
+     * @param type $dept_id
+     * @return type
+     */
+    function getDepartmentName($db_link,$dept_id){
+	
+	$sql="SELECT dept_name FROM department WHERE dept_id=".$dept_id;
 	$results  = mysqli_query($db_link,$sql);
 	if(mysqli_num_rows($results))
 	{
 		$data=mysqli_fetch_row($results);
-		
-		return $data[1]."-".$data[0];
+		return $data[0];
+	}
+	
+    }
+    
+    function getDepartments($db_link){
+	
+	$sql="SELECT dept_id,dept_name FROM department WHERE 1";
+	$results  = mysqli_query($db_link,$sql);
+	if(mysqli_num_rows($results))
+	{
+		return $results;
 	}
     }
     
+    
+    //=======================================================================================================================
+    
+    function getDesignations($db_link){
+	
+	$sql="SELECT * FROM designations WHERE 1";
+	$results  = mysqli_query($db_link,$sql);
+	if(mysqli_num_rows($results))
+	{
+		
+		return $results;
+	}
+    }
+    
+    function getRoles($db_link){
+	$query="SELECT * FROM `role` WHERE 1";
+	$results  = mysqli_query($db_link,$query);
+	if(mysqli_num_rows($results))
+	{
+		return $results;
+	}
+    }
+
+    function getNoAvailableCars($db_link,$car_typeId)
+    {
+            $sql="SELECT count(*)
+             FROM `vehicle`
+             WHERE vehicle_status='0' and type_id=".$car_typeId;
+            $results  = mysqli_query($db_link,$sql);
+            if(mysqli_num_rows($results))
+            {
+                    $data=mysqli_fetch_row($results);
+                    return $data[0];
+            }
+    }
+    
+    function getCarTypes($db_link)
+    {
+            $sql="SELECT * FROM vehicle_type WHERE 1";
+            $results  = mysqli_query($db_link,$sql);
+            if(mysqli_num_rows($results))
+            {
+                    return $results;
+            }
+    }
+    
+    function getSupervisors($db_link){
+        
+	$query="SELECT CONCAT_WS(' ',`staff_firstname`,`staff_surname`),`staff_id` FROM `staff` WHERE (`role_id`=2 || `role_id`=6 || `role_id`=5 || `role_id`=7)  and `delete_status`=0";
+	$results  = mysqli_query($db_link,$query);
+	if(mysqli_num_rows($results))
+	{
+		return $results;
+	}
+    }
+    
+   
     
     
     function getUsers($db_link){

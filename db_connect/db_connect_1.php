@@ -1183,6 +1183,7 @@ function getRequestVehicleId($db_link,$request_id)
 	}
 
 }
+
 function getNoAvailableCars($db_link,$car_typeId)
 {
 	$sql="SELECT count(*)
@@ -1195,6 +1196,7 @@ function getNoAvailableCars($db_link,$car_typeId)
 		return $data[0];
 	}
 }
+
 function getNoAvailableType($db_link,$car_typeId,$gear)
 {
 	$sql="SELECT count(*)

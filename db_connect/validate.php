@@ -561,11 +561,15 @@ if($_GET['status']=="addUser"){
 
 
 if($_GET['status']=="editUser"){
-				  $query="UPDATE `staff` SET `staff_id`=".$_GET['staff_id'].",`staff_surname`='".$_GET['lastname']."',
+				  $query="UPDATE `staff` "
+                                . "SET `staff_id`=".$_GET['staff_id'].""
+                                . ",`staff_surname`='".$_GET['lastname']."',
 				 `staff_firstname`='".$_GET['firstname']."',
-				 `staff_username`='".$_GET['username']."',`role_id`=".$_GET['role'].",
+				 `staff_username`='".$_GET['username']."'"
+                                . ",`role_id`=".$_GET['role'].",
 				 `dept_id`=".$_GET['department'].",
 				 `designation_id`=".$_GET['designation']."
+                                  , `staff_email`='".$_GET['email']."'   
 				  WHERE staff_id=".$_GET['staff_id'];
 				  
 				

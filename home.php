@@ -3,7 +3,9 @@
 	<?php 
 		include("headers.php");	
 		$_SESSION['fullname']=getUserFull($db_link,$_SESSION['fmsuser']);
-                $_SESSION['userrole']="";
+                $_SESSION['userrole']=getRoleId($db_link,$_SESSION['fmsuser']);
+                $_SESSION['designation']=getUserDesignation($db_link,$_SESSION['fmsuser']);
+                $_SESSION['department']=getUserDesignation($db_link,$_SESSION['fmsuser']);
                 
 		$page="dashboard";
 		$subpage="orgdash";
