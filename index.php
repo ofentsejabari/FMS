@@ -14,8 +14,10 @@
 ?>
 		
 <body class="hold-transition login-page">
+    
+     
 	<div class="login-box">
-
+      
 		<div class="login-logo">
 			<a href="#"><b>FMS</b></a>
 		</div>
@@ -52,11 +54,12 @@
 			<a href="#">forgot password?</a><br>
 
 		</div>
-	  <!-- /.login-box-body -->
-	</div>
-		<?php
+            <hr>
+             <?php
 				include("scripts.php");
-		?>
+		?>   
+	</div>
+		
 	<script>
 		$('#loginForm').submit(function(event) {
 			$('#error').remove();					
@@ -79,7 +82,7 @@
                                         bootoast.toast({
                                           message: 'This is a warning toast message',
                                                type: 'warning',
-                                               position: 'top-center',
+                                               position: 'top-right',
                                                 timeout: null,
                                                 animationDuration: 300,
                                                 dismissible: true
