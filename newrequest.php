@@ -80,9 +80,14 @@
                                             
                                             $departments = getDepartments($db_link);
                                             
-                                            $result = getUsers($db_link);
-                                            while($row = mysqli_fetch_row($result)){
-                                                echo " <option value='".$row[0]."'> ".$row[1]." </option> ";
+                                            while($dept = mysqli_fetch_row($departments)){
+                                                
+                                                echo "<optgroup label='".$dept[1]."'><optgroup>";
+                                                $result = getDepartmentUsers($db_link, $dept[0]);
+                                                
+                                                while($row = mysqli_fetch_row($result)){
+                                                    echo " <option value='".$row[0]."'> ".$row[1]." </option> ";
+                                                }
                                             }
                                         ?>
                                     </select>
@@ -125,10 +130,16 @@
                                     <select class="form-control select2" multiple="multiple" data-placeholder="Select travelling officers"
                                             style="width: 100%;">
                                         <?php 
-                                            $result = getUsers($db_link);
-                                            while($row = mysqli_fetch_row($result)){
-
-                                                echo " <option value='".$row[0]."'> ".$row[1]." </option>";
+                                            $departments = getDepartments($db_link);
+                                            
+                                            while($dept = mysqli_fetch_row($departments)){
+                                                
+                                                echo "<optgroup label='".$dept[1]."'><optgroup>";
+                                                $result = getDepartmentUsers($db_link, $dept[0]);
+                                                
+                                                while($row = mysqli_fetch_row($result)){
+                                                    echo " <option value='".$row[0]."'> ".$row[1]." </option> ";
+                                                }
                                             }
                                         ?>
                                     </select>
@@ -155,11 +166,12 @@
                                         <label>Supervisor</label>
                                         <select class="form-control select2"  style="width: 100%;">
                                             <?php 
-//					    	$result = getMySupervisors($db_link,$_SESSION['user']);
-//					    	while($row = mysqli_fetch_row($result)){
-//                                                    echo " <option value='".$row[1]."'> ".$row[0]." </option> ";
-//					    	}
-					    ?>
+						$result = getMySupervisors($db_link,$_SESSION['user']);
+                                                
+						while($row = mysqli_fetch_row($result)){
+                                                    echo " <option value='".$row[1]."'> ".$row[0]." </option> ";
+						}
+                                            ?>
                                         </select>
 
                                     </div>
@@ -202,8 +214,7 @@
 
                                 <div class="form-group">
                                     <label>Vehicle Type</label>
-                                    <select class="form-control select2" multiple="multiple" data-placeholder="Select vehicle type"
-                                            style="width: 100%;">
+                                    <select class="form-control select2"  style="width: 100%;">
                                         <?php 
                                             $results = getCarTypes($db_link);
                                             if($results){
