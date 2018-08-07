@@ -82,9 +82,9 @@
 
                               <div class="box-body no-padding">
                                   <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#"><i class="fa fa-circle-o text-red"></i> Canceled</a></li>
-                                    <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Pending </a></li>
-                                    <li><a href="#"><i class="fa fa-circle-o text-success"></i> Approved </a></li>
+                                    <li><a href="#"><i class="fa fa-circle text-red"></i> Canceled</a></li>
+                                    <li><a href="#"><i class="fa fa-circle text-yellow"></i> Pending </a></li>
+                                    <li><a href="#"><i class="fa fa-circle text-success"></i> Approved </a></li>
                                   </ul>
                               </div>
                             <!-- /.box-body -->
@@ -106,26 +106,60 @@
                             <!-- /.box-header -->
 
                             <div class="box-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="requests" class="table table-bordered table-striped">
 
                                     <thead>
-                                    <tr>
-                                      <th> - </th>
-                                      <th> </th>
-                                      <th> </th>
-                                      <th> </th>
-                                    </tr>
+                                        <tr>
+                                            <th> - </th>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th > </th>
+                                        </tr>
                                     </thead>
 
                                     <tbody>
-
-                                        <tr>
-                                            <td class="mailbox-star"><a href="#"><i class="fa fa-circle-o text-aqua"></i></a></td>
-                                            <td class="mailbox-name">12/06/18</td>
-                                            <td class="mailbox-subject"><a href="read-mail.html"><b>Destination</b> - Reso </a></td>
-                                            <td class="mailbox-date">5 mins ago</td>
-                                        </tr>
-
+                                        <?php  
+                                            $result = getMyRequestHistory($db_link, $_SESSION['fmsuser']); 
+                                            while($row = mysqli_fetch_row($result)){
+                                                
+                                                $date1 = date_create(date(""));
+                                                $date2 = date_create($row[2]);
+                                                $val="";
+                                                $diff = date_diff($date2,$date1);
+                                                
+                                                if($diff -> format("%a")>= 1){
+                                                    $val = $diff -> format("%a days ago");
+                                                }
+                                                else{
+                                                    if($diff -> format("%h") < 1){
+                                                        $val = $diff -> format("%i mins ago");
+                                                    }
+                                                    else{
+                                                        $val = $diff -> format("%h hours ago");
+                                                    }
+                                                }
+                                                
+                                                
+                                                
+                                                if($row[13] == "0"){
+                                                    echo "  <tr>
+                                                            <td class='mailbox-star'><a href='#'><i class='fa fa-circle text-aqua'></i></a></td>
+                                                            <td class='mailbox-name'><a href='#'><i class='fa fa-pencil text-yellow'></i></a></td>
+                                                            <td class='mailbox-date'>".$val."</td>
+                                                            <td class='mailbox-date'>closed</td>
+                                                        </tr>";
+                                                }else{
+                                                    
+                                                    echo "  <tr>
+                                                            <td class='mailbox-star'><a href='#'></i></a></td>
+                                                            <td class='mailbox-name'><a href='#'><i class='fa fa-pencil text-yellow'></i></a></td>
+                                                            <td class='mailbox-date'>".$val."</td>
+                                                            <td class='mailbox-date'>open</td>    
+                                                        </tr>";
+                                                }
+                                            }
+                                       ?>               
                                     </tbody>
                                     
                                 </table>
@@ -164,7 +198,7 @@
     
     <script>
         $(function () {
-          $('#example1').DataTable()
+          $('#requests').DataTable()
         })
     </script>
     

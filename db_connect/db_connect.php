@@ -295,4 +295,24 @@
     }
    
     
+    function getMyRequestHistory($db_link,$staff_id){
+        
+	$query="SELECT `vehicle_id`, CONCAT_WS(' ',
+			`staff_firstname`,`staff_surname`),`request_date`,`request`.`start_date`,
+			`end_date`,`request_destination`,`request_reason`,`request_level`,
+			`request_travellers`,`request_approver_id`
+			,`request_approval_date`,`request_id`,`request_rejectReason`,`request_view`
+			,`request_vehicle_transmission`,`type_id`
+			 FROM `request`,`staff`
+			 WHERE `staff`.`staff_id`=`request`.`staff_id` 
+			 and `request`.`staff_id`=".$staff_id;
+		
+	$results  = mysqli_query($db_link,$query);
+	if($results){
+            if(mysqli_num_rows($results)){
+                return $results;
+            }
+	}
+}
+    
 ?>

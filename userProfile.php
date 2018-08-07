@@ -23,9 +23,9 @@
 
 				<!-- Main content -->
 				<section class="content">
-					<?php include("profile.php"); ?>
+                                    <?php include("profile.php"); ?>
 				</section>
-					<!-- right col -->
+				<!-- right col -->
 			</div>
 			  <!-- /.row (main row) -->
 
@@ -35,11 +35,8 @@
 		  <!-- /.content-wrapper -->
 		<?php include("footer.php"); ?>
 
-			<!-- Control Sidebar -->
+		<!-- Control Sidebar -->
 		<?php include("settings.php"); ?>
-			<!-- /.control-sidebar -->
-		  <!-- Add the sidebar's background. This div must be placed
-			   immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<!-- ./wrapper -->
