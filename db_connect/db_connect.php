@@ -323,22 +323,69 @@
     
     function getMyRequestHistory($db_link,$staff_id){
         
-	$query="SELECT `vehicle_id`, CONCAT_WS(' ',
-			`staff_firstname`,`staff_surname`),`request_date`,`request`.`start_date`,
-			`end_date`,`request_destination`,`request_reason`,`request_level`,
-			`request_travellers`,`request_approver_id`
-			,`request_approval_date`,`request_id`,`request_rejectReason`,`request_view`
-			,`request_vehicle_transmission`,`type_id`
-			 FROM `request`,`staff`
-			 WHERE `staff`.`staff_id`=`request`.`staff_id` 
-			 and `request`.`staff_id`=".$staff_id;
-		
+	$query="SELECT CONCAT_WS(' ', `staff_firstname`,`staff_surname`) AS `fullname`,
+                `request_id`, `staff`.`staff_id`, `vehicle_id`, 
+                `request_date`, `request_destination`,
+                `request_reason`, `request_approver_id`,
+                `request_supervisor_id`, `request_level`,
+                `start_date`, `end_date`, `request_view`,
+                `request_rejectReason`, `request_travellers`,
+                `request_approval_date`, `request_supervisor_date`,
+                `request_closure`, `request_vehicle_transmission`,
+                `type_id`, `request_duty_nature`, `request_supervisor_reason`, 
+                `request_cancelled`, `request_keyCollectiondate`,
+                `request_keyReturnDate`, `request_supervisorRejectReason`,
+                `branch_id`, `request_approval_note`, `request_driver`,
+                `key_return_reminder`
+                FROM `request`,`staff`
+                WHERE `staff`.`staff_id`=`request`.`staff_id` 
+                AND `request`.`staff_id`=".$staff_id;
+        	
 	$results  = mysqli_query($db_link,$query);
 	if($results){
             if(mysqli_num_rows($results)){
                 return $results;
             }
 	}
-}
+    }
+    
+    
+    
+    
+    
+    function getRejectStatus($db_link,$request_id){
+        
+            $query="SELECT request_rejectReason FROM request WHERE request_id=".$request_id;
+            $results  = mysqli_query($db_link,$query);
+                    if(mysqli_num_rows($results))
+                    {
+                            $data=mysqli_fetch_row($results);
+                            if ($data[0]==""){
+                                    return false;
+                            }	
+                            else{
+                                    return true;
+                            }
+                    }
+    }
+    
+    function isKeyCollected($db_link,$request_id){
+		$query="SELECT `request_keyCollectiondate`,`request_keyReturnDate`
+	         FROM `request`
+			 WHERE  request_id=".$request_id;
+		
+		$results  = mysqli_query($db_link,$query);
+		if(mysqli_num_rows($results))
+		{
+			$data=mysqli_fetch_row($results);
+			if ($data[0]==0 && $data[1]==0){
+				return true;
+			}	
+			else{
+				return false;
+			}
+		}
+
+    }
     
 ?>

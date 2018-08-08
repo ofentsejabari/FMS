@@ -82,7 +82,7 @@
 
                               <div class="box-body no-padding">
                                   <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#"><i class="fa fa-circle text-red"></i> Canceled</a></li>
+                                    <li><a href="#"><i class="fa fa-circle text-red"></i> Cancelled</a></li>
                                     <li><a href="#"><i class="fa fa-circle text-yellow"></i> Pending </a></li>
                                     <li><a href="#"><i class="fa fa-circle text-success"></i> Approved </a></li>
                                   </ul>
@@ -124,14 +124,15 @@
                                             while($row = mysqli_fetch_row($result)){
                                                 
                                                 $date1 = date_create(date(""));
-                                                $date2 = date_create($row[2]);
+                                                $date2 = date_create($row[4]);
+                                                
                                                 $val="";
                                                 $diff = date_diff($date2,$date1);
                                                 
                                                 if($diff -> format("%a")>= 1){
                                                     $val = $diff -> format("%a days ago");
-                                                }
-                                                else{
+                                                
+                                                }else{
                                                     if($diff -> format("%h") < 1){
                                                         $val = $diff -> format("%i mins ago");
                                                     }
@@ -141,22 +142,52 @@
                                                 }
                                                 
                                                 
-                                                
-                                                if($row[13] == "0"){
+                                                //-- Cancelled --
+                                                if($row[21] == "1"){
                                                     echo "  <tr>
-                                                            <td class='mailbox-star'><a href='#'><i class='fa fa-circle text-aqua'></i></a></td>
+                                                            <td class='mailbox-star'><a href='#'><i class='fa fa-circle text-red'></i></a></td>
                                                             <td class='mailbox-name'><a href='#'><i class='fa fa-pencil text-yellow'></i></a></td>
+                                                            
+                                                            <td class='mailbox-date'><a href='viewrequest.php'><b>(".$row[10]." - ".$row[11].")</b> -"
+                                                            . "From <b>".strtoupper(getBranchName($db_link,$row[26]))."</b>"
+                                                            . " to  <b>".strtoupper($row[5])."</b> </a>
+                                                            </td>
+                                                                
                                                             <td class='mailbox-date'>".$val."</td>
-                                                            <td class='mailbox-date'>closed</td>
+                                                            <td class='mailbox-date'></td>
                                                         </tr>";
-                                                }else{
                                                     
-                                                    echo "  <tr>
-                                                            <td class='mailbox-star'><a href='#'></i></a></td>
-                                                            <td class='mailbox-name'><a href='#'><i class='fa fa-pencil text-yellow'></i></a></td>
-                                                            <td class='mailbox-date'>".$val."</td>
-                                                            <td class='mailbox-date'>open</td>    
-                                                        </tr>";
+                                                }else if($row[21] == "0"){
+                                                    //--  --
+                                                    if($row[11] == "0"){
+                                                        
+                                                        echo "<tr>
+                                                                <td class='mailbox-star'><a href='#'><i class='fa fa-circle text-green'></i></a></td>
+                                                                <td class='mailbox-name'><a href='#'><i class='fa fa-pencil text-yellow'></i></a></td>
+                                                                <td class='mailbox-date'><a href='viewrequest.php'><b>(".$row[10]." - ".$row[11].")</b> -"
+                                                                    . "From <b>".strtoupper(getBranchName($db_link,$row[26]))."</b>"
+                                                                    . " to  <b>".strtoupper($row[5])."</b> </a>
+                                                                    </td>
+
+                                                                <td class='mailbox-date'>".$val."</td>
+                                                                <td class='mailbox-date'></td>
+                                                            </tr>";
+                                                        
+                                                    }else{
+                                                        
+                                                        echo "<tr>
+                                                                <td class='mailbox-star'><a href='#'><i class='fa fa-circle text-green'></i></a></td>
+                                                                <td class='mailbox-name'><a href='#'><i class='fa fa-pencil text-yellow'></i></a></td>
+                                                                <td class='mailbox-date'><a href='viewrequest.php'><b>(".$row[10]." - ".$row[11].")</b> -"
+                                                                    . "From <b>".strtoupper(getBranchName($db_link,$row[26]))."</b>"
+                                                                    . " to  <b>".strtoupper($row[5])."</b> </a>
+                                                                    </td>
+
+                                                                <td class='mailbox-date'>".$val."</td>
+                                                                <td class='mailbox-date'></td>
+                                                            </tr>";
+                                                        
+                                                    }
                                                 }
                                             }
                                        ?>               
