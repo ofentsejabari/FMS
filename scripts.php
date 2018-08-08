@@ -26,6 +26,9 @@
 <script src="assets/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- CK Editor -->
+<script src="assets/ckeditor/ckeditor.js"></script>
+
 <!-- Slimscroll -->
 <script src="assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
@@ -36,6 +39,17 @@
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+
+
+<!-- Select2 -->
+<script src="assets/select2/dist/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- date-range-picker -->
+<script src="assets/moment/min/moment.min.js"></script>
+<script src="assets/bootstrap-daterangepicker/daterangepicker.js"></script>
 
 <!-- iCheck -->
 <script src="plugins/iCheck/icheck.min.js"></script>

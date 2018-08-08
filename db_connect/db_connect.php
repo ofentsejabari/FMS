@@ -177,7 +177,7 @@
     
     function getDepartments($db_link){
 	
-	$sql="SELECT dept_id,dept_name FROM department WHERE 1";
+	$sql="SELECT dept_id , dept_name FROM department WHERE 1 ORDER BY dept_name ASC";
 	$results  = mysqli_query($db_link,$sql);
 	if(mysqli_num_rows($results))
 	{
@@ -208,18 +208,6 @@
 	}
     }
 
-    function getNoAvailableCars($db_link,$car_typeId)
-    {
-            $sql="SELECT count(*)
-             FROM `vehicle`
-             WHERE vehicle_status='0' and type_id=".$car_typeId;
-            $results  = mysqli_query($db_link,$sql);
-            if(mysqli_num_rows($results))
-            {
-                    $data=mysqli_fetch_row($results);
-                    return $data[0];
-            }
-    }
     
     function getCarTypes($db_link)
     {
@@ -269,5 +257,68 @@
                                 }	
     }
     
+    
+    function getUsers($db_link){
+        
+	$sql = "SELECT `staff_id`,CONCAT_WS(' ',`staff_firstname`,`staff_surname`) FROM staff WHERE 1";
+	$results  = mysqli_query($db_link,$sql);
+	if($results){
+            if(mysqli_num_rows($results)) {
+		
+                return $results;
+            }
+	}	
+    }
+    
+    
+    
+    function getBranches($db_link){
+	
+	$sql = "SELECT branch_id,branch_name FROM branch WHERE 1";
+	$results  = mysqli_query($db_link,$sql);
+	if(mysqli_num_rows($results)){
+            return $results;
+	}
+    }
+    
+    
+    
+    
+    function getNoAvailableCars($db_link,$car_typeId){
+        
+	$sql = "SELECT count(*) FROM `vehicle` WHERE vehicle_status='0' and type_id =".$car_typeId;
+	$results  = mysqli_query($db_link,$sql);
+        
+	if(mysqli_num_rows($results)){
+            $data = mysqli_fetch_row($results);
+            return $data[0];
+	}
+    }
+    
+    
+    function getMySupervisors($db_link,$staff_id){
+	
+	$query = " SELECT `staff_id`, CONCAT_WS(' ',`staff_firstname`,`staff_surname`) AS name FROM `staff` "
+                ." WHERE (`role_id`=2 || `role_id`=6 || `role_id`=5 || `role_id`=7) and staff_surname!='fms' "
+                ." AND `delete_status`=0 and staff_id!=".$staff_id." "
+                ." ORDER BY name ASC";
+	$results  = mysqli_query($db_link,$query);
+        
+	if(mysqli_num_rows($results)){
+            return $results;
+	}
+	
+    }
+    
+    
+    function getDepartmentUsers($db_link,$dept_id){
+    
+        $sql="SELECT staff_id, CONCAT_WS(' ',`staff_firstname`,`staff_surname`) AS name,  dept_id FROM staff WHERE dept_id ='$dept_id' ORDER BY name ASC";
+        $results  = mysqli_query($db_link,$sql);
+        if(mysqli_num_rows($results)){
+            return $results;
+        }
+    }
+   
     
 ?>

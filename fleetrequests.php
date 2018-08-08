@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-	<?php 
-            include("headers.php");
-            $page="request";
-        
-        ?>
+    <?php 
+        include("headers.php");
+        $page="request";
+
+    ?>
     
     
 <body class="hold-transition skin-blue sidebar-mini">
+    
     <div class="wrapper">
     
         <!--top-navigation-------->	
@@ -28,7 +29,7 @@
                 </h1>
                 
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li><a href="home.php"><i class="fa fa-dashboard"></i> Home</a></li>
                             <li class="active">Requests</li>
                 </ol>
             </section>
@@ -39,7 +40,7 @@
                 
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="compose.html" class="btn btn-success btn-block margin-bottom">New Request</a>
+                        <a href="newrequest.php" class="btn btn-success btn-block margin-bottom">New Request</a>
 
                         <div class="box box-solid">
                             <div class="box-header with-border">
@@ -87,9 +88,8 @@
 
                               <div class="box-body no-padding">
                                   <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#"><i class="fa fa-circle-o text-red"></i> Canceled</a></li>
-                                    <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Pending </a></li>
-                                    <li><a href="#"><i class="fa fa-circle-o text-success"></i> Approved </a></li>
+                                    <li><a href="#"><i class="fa fa-circle text-aqua"></i> Unread </a></li>
+
                                   </ul>
                               </div>
                             <!-- /.box-body -->
@@ -111,7 +111,7 @@
                             <!-- /.box-header -->
 
                             <div class="box-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="requests" class="table table-bordered table-striped">
 
                                     <thead>
                                         <tr>
@@ -119,36 +119,50 @@
                                             <th> </th>
                                             <th> </th>
                                             <th> </th>
+                                            <th > </th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         <?php  
-                                           $result=getRequestHistory($db_link); 
-                                            while($row=mysqli_fetch_row($result)){
+                                           $result = getRequestHistory($db_link); 
+                                            while($row = mysqli_fetch_row($result)){
                                                 
-                                                $date1=date_create(date(""));
-                                                $date2=date_create($row[2]);
+                                                $date1 = date_create(date(""));
+                                                $date2 = date_create($row[2]);
                                                 $val="";
-                                                $diff=date_diff($date2,$date1);
-                                                if($diff->format("%a")>1){
-                                                    $val=$diff->format("%a days ago");
+                                                $diff = date_diff($date2,$date1);
+                                                
+                                                if($diff -> format("%a")>= 1){
+                                                    $val = $diff -> format("%a days ago");
                                                 }
                                                 else{
-                                                    if($diff->format("%h")<1){
-                                                        $val=$diff->format("%i mins ago");
+                                                    if($diff -> format("%h") < 1){
+                                                        $val = $diff -> format("%i mins ago");
                                                     }
                                                     else{
-                                                    $val=$diff->format("%h hours ago");
-                                                    
+                                                        $val = $diff -> format("%h hours ago");
                                                     }
                                                 }
-                                                echo " <tr>
-                                                     <td class='mailbox-star'><a href='#'><i class='fa fa-circle-o text-aqua'></i></a></td>
-                                                     <td class='mailbox-name'>".$row[1]."</a></td>
-                                                     <td class='mailbox-subject'><a href='read-mail.html'>From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> on the <b>".$row[3]."</b> </a></td>
-                                                     <td class='mailbox-date'>".$val."</td>
-                                                 </tr>";
+                                                
+                                                if($row[13] == "0"){
+                                                    echo " <tr>
+                                                         <td class='mailbox-star'><a href='#'><i class='fa fa-circle text-aqua'></i></a></td>
+                                                         <td class='mailbox-name'>".$row[1]."</a></td>
+                                                         <td class='mailbox-subject'><a href='viewrequest.php'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
+                                                         <td class='mailbox-date'>".$val."</td>
+                                                         <td class='mailbox-date'>closed</td>
+                                                     </tr>";
+                                                }else{
+                                                    
+                                                    echo " <tr>
+                                                         <td class='mailbox-star'><a href='#'></i></a></td>
+                                                         <td class='mailbox-name'>".$row[1]."</a></td>
+                                                         <td class='mailbox-subject'><a href='viewrequest.php'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
+                                                         <td class='mailbox-date'>".$val."</td>
+                                                         <td class='mailbox-date'>open</td>    
+                                                     </tr>";
+                                                }
                                             }
                                        ?>               
                                     </tbody>
@@ -188,9 +202,17 @@
     
     
     <script>
-        $(function () {
-          $('#example1').DataTable()
-        })
+        $(document).ready(function() {
+        $('#requests').DataTable( {
+            "columnDefs": [
+                {
+                    "targets": [ 4 ],
+                    "visible": false,
+                    "searchable": true
+                }
+            ]
+        } );
+    } );
     </script>
     
 
