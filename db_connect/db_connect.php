@@ -229,6 +229,8 @@
 	}
     }
     
+
+    
     function getMyRequests($db_link,$staff){
         
          $sql = "SELECT `request_date` FROM `request`
@@ -320,5 +322,65 @@
         }
     }
    
+    //==================================== VEHICLES =====================================================
     
+    function getPlateNumbers($db_link)
+    {
+                    $sql = "SELECT  `vehicle_id`,`vehicle_plateNumber`
+                                    FROM `vehicle`
+                        WHERE 1";
+                            $results  = mysqli_query($db_link,$sql);
+
+
+                                    if(mysqli_num_rows($results))
+                                    {
+                                            return $results ;
+                                    }
+    }
+    
+    function getVehicleTypeNo($db_link,$type_id){
+	$sql="SELECT Count(*) FROM `vehicle`,vehicle_details WHERE `del`=0 and vehicle.vehicle_id=vehicle_details.vehicle_id and `type_id`=".$type_id;
+	$results=mysqli_query($db_link,$sql);
+	if($results){
+			if(mysqli_num_rows($results))
+				{
+					$data=mysqli_fetch_row($results);
+					return $data[0];
+				}
+	}			
+	
+    }
+    
+    function getTripNo($db_link,$date){
+
+        $sql = " SELECT Count(*) 
+            FROM `trip_details`
+            WHERE return_date  BETWEEN '".$date."-01' and '".$date."-31'";
+        
+	$results  = mysqli_query($db_link,$sql);
+	
+	if($results){
+		if(mysqli_num_rows($results))
+		{
+			$data=mysqli_fetch_row($results);
+			return $data[0];
+		}
+	}	
+    }
+    
+    function getRequestNo($db_link,$date){
+	$sql = " SELECT Count(*) 
+			FROM `request`
+			WHERE return_date  BETWEEN '".$date."-01' and '".$date."-31'";
+			$results  = mysqli_query($db_link,$sql);
+			
+			if($results){
+				if(mysqli_num_rows($results))
+				{
+					$data=mysqli_fetch_row($results);
+					return $data[0];
+				}
+			}	
+    }   
+
 ?>
