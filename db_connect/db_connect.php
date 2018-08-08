@@ -229,7 +229,33 @@
 	}
     }
     
-   
+    function getMyRequests($db_link,$staff){
+        
+         $sql = "SELECT `request_date` FROM `request`
+                  WHERE  `staff_id`=".$staff;
+                         $results  = mysqli_query($db_link,$sql);
+
+                         if($results){
+                                 if(mysqli_num_rows($results))
+                                 {
+                                         return $results;
+                                 }
+                         }	
+
+
+    }
+    function getMyTrips($db_link,$staff){
+        $sql = "SELECT `request_date` FROM `request`
+                         WHERE  `staff_id`=".$staff." and `vehicle_id`!=0";
+                                $results  = mysqli_query($db_link,$sql);
+
+                                if($results){
+                                        if(mysqli_num_rows($results))
+                                        {
+                                                return $results;
+                                        }
+                                }	
+    }
     
     
     function getUsers($db_link){

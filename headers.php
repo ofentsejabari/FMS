@@ -41,6 +41,8 @@
   <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="plugins/iCheck/all.css">
+  
+  <link href="assets/toggle-master/css/bootstrap-toggle.css" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/select2/dist/css/select2.min.css">
   
