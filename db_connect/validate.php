@@ -2,7 +2,7 @@
 session_start();
 include('db_connect.php');
 $db_link=db_connect();
-$db_link1=db_connect1();
+//$db_link1=db_connect1();
 function php2MySqlTime($phpDate){
     return date("Y-m-d H:i:s", $phpDate);
 }
@@ -561,41 +561,29 @@ if($_GET['status']=="addUser"){
 
 
 if($_GET['status']=="editUser"){
-				  $query="UPDATE `staff` "
-                                . "SET `staff_id`=".$_GET['staff_id'].""
-                                . ",`staff_surname`='".$_GET['lastname']."',
-				 `staff_firstname`='".$_GET['firstname']."',
-				 `staff_username`='".$_GET['username']."'"
-                                . ",`role_id`=".$_GET['role'].",
-				 `dept_id`=".$_GET['department'].",
-				 `designation_id`=".$_GET['designation']."
-                                  , `staff_email`='".$_GET['email']."'   
-				  WHERE staff_id=".$_GET['staff_id'];
-				  
-				
-					$result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));	
-					if($result){
-					
-						$subject="FMS: UPDATED INFO ACCOUNT";
-						$to=$_GET['username'];
-						$message="\n"
-								."Account details updated"
-								."\n"
-								."__________________________________________"
-								."\n"
-								."Username:".$to
-								."\n"
-								."Password : Use the current password.. Incase you forgot it : use the forgot password optionon the login screen or request admin to reset \n"
-								." \n"
-								."Access system : http://whitespaces.bitri.co.bw/fms/"
-								;	
-						emailSender($to,$subject,$message);
-						echo " success";
-					}
-					else{
-						echo "Unsuccessful";
-					}
+    
+            $query="UPDATE `staff`
+                    SET `staff_surname`='".$_GET['lastname']."',
+                   `staff_firstname`='".$_GET['firstname']."',
+                   `staff_username`='".$_GET['username']."',
+                   `role_id`='".$_GET['role']."',
+                    `staff_email`='".$_GET['email']."',
+                   `dept_id`=".$_GET['department'].",
+                   `designation_id`=".$_GET['designation']." 
+                    WHERE staff_id=".$_GET['user'];
+
+
+            $result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));	
+            if($result){
+                
+                echo " success";
+            }
+            else{
+                  echo "Unsuccessful";
+	}
 }
+
+
 if($_GET['status']=='passwordChange'){
 
 			$query="UPDATE `staff` SET `staff_password`='".sha1($_GET['password'])."',`password_reseted`=0 WHERE `staff_id`=".$_GET['user_id'];

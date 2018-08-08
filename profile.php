@@ -1,36 +1,67 @@
-<?php  
-    //
-    $queryResult= getStaffProfile($db_link,$_SESSION['fmsuser']);
-    $myProfile= mysqli_fetch_row($queryResult);
 
-?>
-    <!-- Main content -->
-    <section class="content">
+<div class="row">
 
-		<div class="row">
-			<div class="col-md-3">
+    
+      <div class="col-md-3">
+          <!-- Widget: user widget style 1 -->
+            <div class="box box-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-aqua-active">
+                    <h3 class="widget-user-username"><?php echo $_SESSION['fullname']; ?></h3>
+                    <h5 class="widget-user-desc"><?php echo $_SESSION['designation']; ?></h5>
+                </div>
+            
+                <div class="widget-user-image">
+                    <img class="img-circle" src="dist/img/user1-128x128.jpg" alt="User Avatar">
+                </div>
+                <div class="box-footer">
+                <div class="row">
+                    <div class="col-sm-4 border-right">
+                        <div class="description-block">
+                            <h5 class="description-header">
+                                <?php 
+                                    $requestNo=getMyRequests($db_link,$_SESSION['fmsuser']);
+                                    $number= mysqli_num_rows($requestNo);
 
-				<!-- Profile Image -->
-				<div class="box box-primary">
-					<div class="box-body box-profile">
-						<img class="profile-user-img img-responsive img-circle" src="dist/img/user4-128x128.jpg" alt="User profile picture">
-
-						<h3 class="profile-username text-center"><?php echo $_SESSION['fullname']; ?></h3>
-
-						<p class="text-muted text-center"><!--work--><?php echo $_SESSION['designation']; ?></p>
-
-					</div>
-				<!-- /.box-body -->
-				</div>
-          <!-- /.box -->
-
-
+                                    echo $number; ?>
+                            </h5>
+                            <span class="description-text">Total Requests</span>
+                        </div>
+                      <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-4 border-right">
+                      <div class="description-block">
+                        <h5 class="description-header">
+                            <?php
+                                $tripNo =getMyTrips($db_link,$_SESSION['fmsuser']);
+                                echo  mysqli_num_rows($tripNo);
+                            ?>
+                        </h5>
+                        <span class="description-text">Total Trips</span>
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-4">
+                      <div class="description-block">
+                        <h5 class="description-header">35</h5>
+                        <span class="description-text">PRODUCTS</span>
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+              <!-- /.row -->
+            </div>
+          </div>
+          <!-- /.widget-user -->
         </div>
 		
 		
         <!-- /.col -->
         <div class="col-md-9">
-          <div class="nav-tabs-custom">
+           <div class="nav-tabs-custom">
          
 		<ul class="nav nav-tabs">
                     <li class="active"><a href="#account" data-toggle="tab">Account</a></li>
@@ -42,12 +73,15 @@
 		<div class="active tab-pane" id="account">
 			<!-- Post -->
                             <div class="box-footer">
-                                <button type="button" onclick="editForm(false)" class="btn btn-default "><i class="fa fa-edit"></i> Edit</button>
+                                <div class="checkbox">
+                                    <input id="edit" onclick="checkAction()" type="checkbox" data-toggle="toggle" data-on="Editing" data-off="Disabled">
+                             
+                                </div>    
+                                <!--<a type="button" href="#" onclick="editForm(false)"><i class="fa fa-edit"></i> Edit</a>--->
                             </div>     
                         
-                            <hr>
                             <div class="row">
-                                <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post" id="profileForm">
+                                <form  id="profileForm">
                                     
                                     <input id="user" value="<?php echo $_SESSION['fmsuser']; ?>" hidden="hidden" />
                                     
@@ -64,12 +98,12 @@
 						
 					</div>
 					
-					<div class="form-group">
-						<label for="email">Email</label>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-							<input type="email" class="form-control" placeholder="Email" value="<?php echo $myProfile[3] ?>" id="email" disabled required>
-						</div>
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                                <input class="form-control" placeholder="Email" value="<?php echo $myProfile[9] ?>" type="email" id="email" disabled required>
+                                              </div>
 					</div>
 					
 					<div class="form-group">
@@ -92,10 +126,7 @@
 					
                                     </div>
                                     <div class="col-md-6">
-					<div class="form-group">
-                                            <label for="middlename">Middlename</label>
-                                            <input type="text" class="form-control" value="<?php echo "" ?>" id="middlename" placeholder="Firstname" disabled>
-					</div>
+					
 					
 					<div class="form-group">
 						<label for="username">Username</label>
@@ -104,7 +135,7 @@
 					
 					<div class="form-group">
 						<label>Department</label>
-						<select id="department" class="form-control" disabled required>
+						<select id="department" class="form-control select2" disabled required>
 							<option value="">Select Department</option>
 							<?php 
 								$departments=getDepartments($db_link);
@@ -146,7 +177,7 @@
                                          
                                             <div class="box-footer">
                                                
-                                                <button id="save" type="submit" class="btn btn-success pull-right" disabled>Save</button>
+                                                <button id="save" onclick="submitForm()"  type="submit" class="btn btn-success pull-right" disabled>Save</button>
                                             </div>
                                     </div>	
 				</form>
@@ -216,48 +247,3 @@
         <!-- /.col -->
       </div>
       <!-- /.row -->
-
-    </section>
-	
-<script>
-  $(function () {
-        $('#myRequest').DataTable();
-  });
-  
-  function editForm(val)
-  {
-        document.getElementById("firstname").disabled = val;
-        document.getElementById("lastname").disabled = val;
-        document.getElementById("email").disabled = val;
-        document.getElementById("designation").disabled = val;
-        document.getElementById("middlename").disabled = val;
-        document.getElementById("username").disabled = val;
-        document.getElementById("department").disabled = val;
-        document.getElementById("role").disabled = val;
-        document.getElementById("save").disabled = val;
-   }
-  
-  $('#profileForm').submit(function(event) {
-    var formData = $(this).serialize();
-      $.ajax({
-		type : 'GET', // define the type of HTTP verb we want to use (POST for our form)
-		url  : 'db_connect/validate.php?status=editUser'
-                        '&user='+document.getElementById("user").value(),
-			'&firstname ='+document.getElementById("firstname").value(),
-                        '&lastname ='+document.getElementById("lastname").value(),
-                        '&email ='+document.getElementById("email").value(),
-                        '&designation ='+document.getElementById("designation").value(),
-                        '&middlename ='+document.getElementById("middlename").value(),
-                        '&username ='+document.getElementById("username").value(),
-                        '&department ='+document.getElementById("department").value(),
-                        '&role ='+document.getElementById("role").value()
-		data 		: formData,
-		dataType 	: 'html',
-		success		:  
-		function(data){
-			
-		}
-		
-        });
-     });    
-</script>
