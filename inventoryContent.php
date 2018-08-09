@@ -29,18 +29,17 @@
 }
 
  .block {
-    text-align: left;
+    text-align: center;
     vertical-align: middle;
-      border:#004276 2px solid;
 }
 
 .circle {
     border:#004276 2px solid;
-    border-radius: 60%;
+    border-radius: 200px;
     color: #00193A;
-    height: 80%;
-    width:90%;
-    padding-left:40px;
+    height: 250px;
+    width: 250px;
+    padding:20px;
     display: table;
 }
 .circle p {
@@ -122,17 +121,23 @@
                          ?>
                                         <div class="container">
                                            <div class="row">
-                                               <div class="col-md-4 block">
+                                               <div class="col-md-5 block">
                                                    <div class="circle">
-                                                       <br>
-                                                       <div><h4>Reg No <b> <?php echo $_GET['plate']; ?> </b></h4></div>
-                                                       <br>
-                                                       <div>Chassis No:  <b> <?php echo $vehicle[2]; ?> </b></div>
-                                                       <div>Engine No:  <b> <?php echo $vehicle[2]; ?> </b></div>
-                                                       <div>Make:  <b> <?php echo $vehicle[2]; ?> </b></div>
-                                                       <div>Model:  <b> <?php echo $vehicle[1]; ?> </b></div>
-                                                       <div>Body Type:  <b> <?php echo getCarType($db_link,$vehicle[11]); ?> </b></div>
-                                                       <div>Color:  <b> <?php echo $vehicle[10]; ?> </b></div>
+                                                      
+                                                        <div><h4>Reg No <b> <?php echo $_GET['plate']; ?> </b></h4></div>
+                                                        <br>
+                                                        <div>
+                                                            <div>Chassis No:  <b> <?php echo $vehicle[14]; ?> </b></div>
+                                                            <div>Engine No:  <b> <?php echo $vehicle[15]; ?> </b></div>
+                                                            <div>Make:  <b> <?php echo $vehicle[2]; ?> </b></div>
+                                                            <div>Model:  <b> <?php echo $vehicle[1]; ?> </b></div>
+                                                            <div>Body Type:  <b> <?php echo getCarType($db_link,$vehicle[11]); ?> </b></div>
+                                                            <div>Color:  <b> <?php echo $vehicle[10]; ?> </b></div>
+                                                            <div>Valid until end of:  </div>
+                                                       </div>
+                                                        <b> <?php $date = DateTime::createFromFormat("Y-m-d",$vehicle[13]);
+                                                                echo $date->format("M")." ".$date->format("Y");
+                                                                ?></b>
                                                        
                                                    </div>
                                                </div>
