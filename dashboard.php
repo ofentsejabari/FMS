@@ -6,7 +6,12 @@
 				  <h3>
                                       <?php 
                                             $result= getRequestHistory($db_link);
-                                            echo mysqli_num_rows($result);
+                                            if($result)
+                                            {
+                                                echo mysqli_num_rows($result);
+                                            
+                                            }
+                                            else{ echo "0";}
                                       ?>
                                   </h3>
 
@@ -24,7 +29,12 @@
                             <div class="inner">
                                 <h3><?php 
                                        $result =getPlateNumbers($db_link);
-                                       echo mysqli_num_rows($result);
+                                         if($result)
+                                            {
+                                                echo mysqli_num_rows($result);
+                                            
+                                            }
+                                            else{ echo "0";}
                                   ?>
                                 </h3>
 
@@ -45,7 +55,12 @@
                         <h3>
                               <?php 
                                       $result=getUsers($db_link);
-                                      echo mysqli_num_rows($result);
+                                       if($result)
+                                            {
+                                                echo mysqli_num_rows($result);
+                                            
+                                            }
+                                            else{ echo "0";}
                               ?>
                         </h3>
 
@@ -128,7 +143,7 @@
 		var doughnutData = [
 				<?php 
                                     $result = getCarTypes($db_link);
-                                    
+                                    if($result){
                                     $color = array("#F7464A","#0080ff","#00FF00","#ff0080","#ffbf00","#00FF00","#00bfff","#8000ff","#ff00bf");
                                     $count=0;
                                         while($row= mysqli_fetch_row($result)){ 
@@ -140,7 +155,7 @@
                                                 label: '".$row[1]."'
                                             },"; 
                                             $count++;
-                                        }
+                                    } }
                                     ?>
 
 			];
@@ -166,7 +181,9 @@
                                                                 
                                                                 $dates[$i]=date("Y")."-0".($i+1);
                                                                 $no=getTripNo($db_link,$dates[$i]);
-                                                                echo "".$no.",";
+                                                                if($no>0){
+                                                                echo "".$no.",";}
+                                                                else{ echo "0";}
                                                             }
                                                             
                                                                 
