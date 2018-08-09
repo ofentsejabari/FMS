@@ -505,8 +505,6 @@ function getStaff($db_link)
 }
 
 
-
-
 function getUser($db_link,$staff_id)
 {
 	$sql="SELECT `staff_username` FROM staff WHERE staff_id='$staff_id'";

@@ -24,15 +24,15 @@
 				<!-- Main content -->
 				<section class="content">
 					<?php  
-    //
-    $queryResult= getStaffProfile($db_link,$_SESSION['fmsuser']);
-    $myProfile= mysqli_fetch_row($queryResult);
+                                            //
+                                            $queryResult= getStaffProfile($db_link,$_SESSION['fmsuser']);
+                                            $myProfile= mysqli_fetch_row($queryResult);
 
-?>
-    <!-- Main content -->
-    <section class="content">
-        <object id="map" data="https://whitespaces.bitri.co.bw/traccar/" style="min-height:700px;"  width="100%"  > </object>
-    </section>
+                                        ?>
+                                    <div style="height:100%;"> 
+                                        <object type="text/html" data="https://whitespaces.bitri.co.bw/traccar/" width="100%" height="800px" style=" overflow:auto;"> </object>
+                                    </div>
+
 	
 
 				</section>

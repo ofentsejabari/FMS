@@ -16,10 +16,6 @@
     <!-- Left side column. contains the logo and sidebar -->
     <?php include("sideNav.php");?>
 
-    
-    
-    
-    
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -36,28 +32,25 @@
             </ol>
         </section>
         
-        
-        
-        
-
         <!-- Main content -->
         <section class="content">
 
           <!-- SELECT2 EXAMPLE -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Request Details</h3>
+                    <h3 class="box-title">Request Details</h3>
 
-                  <div class="box-tools pull-right">
+                    <div class="box-tools pull-right">
     <!--                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>-->
-                  </div>
+                    </div>
                 </div>
               
               
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <form>
+                    <form id="requestForm">
+                        <input id="user" type="text" value="<?php echo $_SESSION['fmsuser']; ?>" hidden/>
                         <div class="row">
 
                             <div class="col-md-6">
@@ -66,16 +59,15 @@
                                 <div class="form-group">
                                     <label>Destination</label>
 
-                                    <input type="text" class="form-control" placeholder="Destination">
+                                    <input id="destination" type="text" class="form-control" placeholder="Destination" required>
 
                                 </div>
                                 
-                                
+                               
                                 <!--Drivers-->
                                 <div class="form-group">
                                     <label>Driver(s)</label>
-                                    <select class="form-control select2" multiple="multiple" data-placeholder="Select driver(s)"
-                                            style="width: 100%;">
+                                    <select id="drivers" class="form-control select2" multiple="multiple" data-placeholder="Select driver(s)" style="width: 100%;" required>
                                         <?php
                                             
                                             $departments = getDepartments($db_link);
@@ -94,10 +86,10 @@
                                 </div>
 
 
-
+                                 
                                 <div class="form-group">
                                     <label>Departure Branch</label>
-                                    <select class="form-control select2"  style="width: 100%;">
+                                    <select id="branch" class="form-control select2"  style="width: 100%;" required>
                                         <?php 
                                             $result = getBranches($db_link);
                                             while($row = mysqli_fetch_row($result)){
@@ -112,7 +104,7 @@
                                 <div class="form-group">
                                     
                                     <label>Trip Purpose</label>
-                                    <textarea class="textarea" id="purpose" name="purpose" rows="10" cols="80" style="width: 100%;">
+                                    <textarea id="reason" class="textarea" id="purpose" name="purpose" rows="10" cols="80" style="width: 100%;" required>
 
                                     </textarea>
 
@@ -120,15 +112,12 @@
 
                             </div>
 
-
-
                             <div class="col-md-6">
 
                                 <!--travelling offices-->
                                 <div class="form-group">
                                     <label>Travelling Officers</label>
-                                    <select class="form-control select2" multiple="multiple" data-placeholder="Select travelling officers"
-                                            style="width: 100%;">
+                                    <select id="travelling" class="form-control select2" multiple="multiple" data-placeholder="Select travelling officers" style="width: 100%;" required>
                                         <?php 
                                             $departments = getDepartments($db_link);
                                             
@@ -156,7 +145,7 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
 
-                                        <input type="text" class="form-control pull-right" id="reservation">
+                                        <input  type="text" class="form-control pull-right" id="reservation" required>
 
                                     </div>
 
@@ -164,9 +153,9 @@
                                     <div class="form-group">
 
                                         <label>Supervisor</label>
-                                        <select class="form-control select2"  style="width: 100%;">
+                                        <select id="supervisor" class="form-control select2"  style="width: 100%;" required>
                                             <?php 
-						$result = getMySupervisors($db_link,$_SESSION['user']);
+						$result =getSupervisors($db_link);
                                                 
 						while($row = mysqli_fetch_row($result)){
                                                     echo " <option value='".$row[1]."'> ".$row[0]." </option> ";
@@ -199,9 +188,10 @@
                                 <div class="form-group">
                                     <label>Gearbox /Transmission</label>
 
-                                    <select class="form-control select2" style="width: 100%;">
-                                        <option selected="selected" value="1">Automatic</option>
+                                    <select id="transmission" class="form-control select2" style="width: 100%;" required>
+                                        <option value="1">Automatic</option>
                                         <option value="2">Manual</option>
+                                        <option value="3">Either</option>
                                     </select>
 
                                 </div>
@@ -214,7 +204,7 @@
 
                                 <div class="form-group">
                                     <label>Vehicle Type</label>
-                                    <select class="form-control select2"  style="width: 100%;">
+                                    <select id="vehicleType" class="form-control select2"  style="width: 100%;" required>
                                         <?php 
                                             $results = getCarTypes($db_link);
                                             if($results){
@@ -237,7 +227,7 @@
                         <div class="box-footer">
                             <div class="pull-right">
                                 <button type="reset" class="btn btn-default"><i class="fa fa-trash"></i> &nbsp; Clear </button>
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-send"></i> &nbsp; Send </button>
+                                <button type="submit" onclick="submitForm()" class="btn btn-primary"><i class="fa fa-send"></i> &nbsp; Send </button>
                             </div>
                             <a href="fleetrequests.php"  class="btn btn-default"><i class="fa fa-times"></i> &nbsp; Discard </a>
                         </div>
@@ -340,6 +330,63 @@
     
     
   })
+  
+  
+  
+  /**
+   * 
+   */
+  
+    function submitForm(){
+      // drivers department trasmission
+        if(document.getElementById("destination").value!="" && document.getElementById("drivers").value!=""
+           && document.getElementById("branch").value!="" && document.getElementById("reason").value!="" 
+           && document.getElementById("travelling").value!="" && document.getElementById("reservation").value!="" 
+           && document.getElementById("supervisor").value!="" && document.getElementById("transmission").value!=""
+           && document.getElementById("vehicleType").value!=""
+                ){
+                    alert('&user='+document.getElementById("user").value
+                            +'&destination='+document.getElementById("destination").value
+                            +'&drivers='+document.getElementById("drivers").value
+                            +'&branch='+document.getElementById("branch").value
+                            +'&reason='+document.getElementById("reason").value
+                            +'&travelling='+document.getElementById("travelling").value
+                            +'&reservation='+document.getElementById("reservation").value
+                            +'&supervisor='+document.getElementById("supervisor").value
+                            +'&transmission='+document.getElementById("transmission").value
+                            +'&vehicleType='+document.getElementById("vehicleType").value);
+                    var logindata = $(this).serialize();
+                    
+                    $.ajax({
+                            type : 'GET', // define the type of HTTP verb we want to use (POST for our form)
+                            url : 'db_connect/validate.php?status=request'
+                            +'&user='+document.getElementById("user").value
+                            +'&destination='+document.getElementById("destination").value
+                            +'&drivers='+document.getElementById("drivers").value
+                            +'&branch='+document.getElementById("branch").value
+                            +'&reason='+document.getElementById("reason").value
+                            +'&travelling='+document.getElementById("travelling").value
+                            +'&reservation='+document.getElementById("reservation").value
+                            +'&supervisor='+document.getElementById("supervisor").value
+                            +'&transmission='+document.getElementById("transmission").value
+                            +'&vehicleType='+document.getElementById("vehicleType").value
+                            ,
+                            dataType 	: 'html',
+                            success		:  
+                            function(data){
+                                alert(data);
+                            }
+                    });
+					
+                                       
+        }
+        else{
+            alert("failure");
+                
+        }
+  }
+  
+  
 </script>
 </body>
 </html>
