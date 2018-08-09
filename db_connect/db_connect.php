@@ -461,23 +461,25 @@
 
     function getMyRequestHistory($db_link,$staff_id){
         
-	$query="SELECT CONCAT_WS(' ', `staff_firstname`,`staff_surname`) AS `fullname`,
-                `request_id`, `staff`.`staff_id`, `vehicle_id`, 
-                `request_date`, `request_destination`,
-                `request_reason`, `request_approver_id`,
-                `request_supervisor_id`, `request_level`,
-                `start_date`, `end_date`, `request_view`,
-                `request_rejectReason`, `request_travellers`,
-                `request_approval_date`, `request_supervisor_date`,
-                `request_closure`, `request_vehicle_transmission`,
-                `type_id`, `request_duty_nature`, `request_supervisor_reason`, 
-                `request_cancelled`, `request_keyCollectiondate`,
-                `request_keyReturnDate`, `request_supervisorRejectReason`,
-                `branch_id`, `request_approval_note`, `request_driver`,
-                `key_return_reminder`
-                FROM `request`,`staff`
-                WHERE `staff`.`staff_id`=`request`.`staff_id` 
-                AND `request`.`staff_id`=".$staff_id;
+	$query = "SELECT CONCAT_WS(' ', `staff_firstname`,`staff_surname`) AS 
+            `fullname`, `request_id`,
+            `staff`.`staff_id`, `vehicle_id`,
+            `request_date`, `request_destination`,
+            `request_reason`, `request_approver_id`,
+            `request_supervisor_id`, `request_level`,
+            `start_date`, `end_date`,
+            `request_view`, `request_rejectReason`, 
+            `request_travellers`, `request_approval_date`,
+            `request_supervisor_date`, `request_closure`,
+            `request_vehicle_transmission`, `type_id`,
+            `request_duty_nature`, `request_supervisor_reason`, 
+            `request_cancelled`, `request_keyCollectiondate`,
+            `request_keyReturnDate`, `request_supervisorRejectReason`,
+            `branch_id`, `request_approval_note`, 
+            `request_driver`, `key_return_reminder`
+            FROM `request`,`staff`
+            WHERE `staff`.`staff_id`=`request`.`staff_id` 
+            AND `request`.`staff_id`=".$staff_id;
         	
 	$results  = mysqli_query($db_link,$query);
 	if($results){

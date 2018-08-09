@@ -164,7 +164,7 @@
                                                         </div>
                                                         ";
                                             }else{
-                                                echo " <h3 class='timeline-header'><a href='#'>".getUserFull($db_link,$result[8])."</a> rejected your trip request.
+                                                echo "  <h3 class='timeline-header'><a href='#'>".getUserFull($db_link,$result[8])."</a> rejected your trip request.
                                                         </h3>
 
                                                         <div class='timeline-body'>
@@ -175,7 +175,7 @@
                                             }
                                             
                                             
-                                            if($result[7] != "" && $result[22] != "1"){ //-- not proceed and not cancelled --
+                                            if($result[7] == "" && $result[22] != "1"){ //-- not proceed and not cancelled --
                                                 echo "<div class='timeline-footer'>
                                                             <a class='btn btn-success btn-xs'>Approve</a>
                                                             <a class='btn btn-danger btn-xs'>Reject</a>
@@ -211,15 +211,24 @@
                                                         </h3>
 
                                                         <div class='timeline-body'>
-                                                            Assigned Vehicle -  ". getV$result[3] ."
-                                                        </div>
-
-                                                        <div class='timeline-footer'>
-                                                            <a class='btn btn-warning btn-xs'>Keys Collected</a>
-                                                            <a class='btn btn-warning btn-xs'>Return Keys</a>
-                                                        </div>
-                                                    </div>
-                                                </li>";
+                                                            Trip has been assigned vehicle -  <a href='#'>". mysqli_fetch_row(getvehicleDetails($db_link, $result[3]))[0] ."</a>.
+                                                            Please collect the keys within 30 minutes. Failure to collect the keys within specified period may result in reallocation of the vehicle.
+                                                                
+                                                        </div>";
+                                            
+                                                    if($result[23] == "0" ){//-- keys not collected
+                                                        
+                                                        echo"<div class='timeline-footer'>
+                                                                <a class='btn btn-warning btn-xs'>Collect Keys</a>
+                                                            ";
+                                                    }
+                                                    if($result[24] == "0" && $result[23] != "0" ){//-- keys not collected
+                                                        
+                                                        echo"<a class='btn btn-warning btn-xs'>Return Keys</a>
+                                                            </div>";
+                                                    }
+                                                        
+                                                echo" </div> </li>";
                                         }
 
                                     ?>

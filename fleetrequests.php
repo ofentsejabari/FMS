@@ -73,16 +73,21 @@
 
                                     <!-- Fleet Officer -->
                                     <li class="active"><a href="fleetrequests.php"><i class="fa fa-filter"></i> Fleet Request 
-                                            <span class="label label-warning pull-right">
+                                            
                                                 <?php 
                                                 $result = getRequestHistory($db_link); 
                                                 $unread = 0;
-                                                while($row = mysqli_fetch_row($result)){
-                                                    if($row[13] == "0"){
-                                                        $unread+=1;                    
+                                                if($result){
+                                                    echo '<span class="label label-warning pull-right">';
+                                                    while($row = mysqli_fetch_row($result)){
+                                                        if($row[13] == "0"){
+                                                            $unread+=1;                    
+                                                        }
                                                     }
-                                                }
-                                                echo $unread; ?></span></a> </li>
+                                                
+                                                    echo $unread."</span>"; 
+                                                
+                                                }?></a> </li>
                                             
                                 </ul>
                                 
@@ -146,6 +151,7 @@
                                     <tbody>
                                         <?php  
                                             $result = getRequestHistory($db_link);
+                                            if($result){
                                             while($row = mysqli_fetch_row($result)){
                                                 
                                                 $date1 = date_create(date(""));
@@ -183,6 +189,7 @@
                                                          <td class='mailbox-date'>open</td>    
                                                      </tr>";
                                                 }
+                                            }
                                             }
                                        ?>               
                                     </tbody>

@@ -58,18 +58,22 @@
                                   <li class="active"><a href="triprequests.php"><i class="fa fa-file-text-o"></i> Trip Requests </a></li>
                                 
                                   <!-- Fleet Officer -->
-                                  <li><a href="fleetrequests.php"><i class="fa fa-filter"></i> Fleet Request 
-                                            <span class="label label-warning pull-right">
+                                  <li ><a href="fleetrequests.php"><i class="fa fa-filter"></i> Fleet Request 
+                                            
                                                 <?php 
                                                 $result = getRequestHistory($db_link); 
                                                 $unread = 0;
-                                                while($row = mysqli_fetch_row($result)){
-                                                    if($row[13] == "0"){
-                                                        $unread+=1;                    
+                                                if($result){
+                                                    echo '<span class="label label-warning pull-right">';
+                                                    while($row = mysqli_fetch_row($result)){
+                                                        if($row[13] == "0"){
+                                                            $unread+=1;                    
+                                                        }
                                                     }
-                                                }
-                                                echo $unread; ?></span></a>
-                                  </li>
+                                                
+                                                    echo $unread."</span>"; 
+                                                
+                                                }?></a> </li>
                               </ul>
                                 
                             </div>
