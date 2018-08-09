@@ -221,7 +221,7 @@
     
     function getSupervisors($db_link){
         
-	$query="SELECT CONCAT_WS(' ',`staff_firstname`,`staff_surname`),`staff_id` FROM `staff` WHERE (`role_id`=2 || `role_id`=6 || `role_id`=5 || `role_id`=7)  and `delete_status`=0";
+	$query="SELECT CONCAT_WS(' ',`staff_firstname`,`staff_surname`),`staff_id` FROM `staff` WHERE (`role_id`=2 || `role_id`=6 || `role_id`=5 || `role_id`=7)  and `delete_status`=0 ORDER BY `staff_firstname`";
 	$results  = mysqli_query($db_link,$query);
 	if(mysqli_num_rows($results))
 	{
@@ -324,6 +324,71 @@
    
     //==================================== VEHICLES =====================================================
     
+    function getInventory($db_link){
+	$sql = "SELECT  `vehicle_plateNumber`,`vehicle_model`
+                   ,`vehicle_manufacture`,`vehicle_details_carDealer`,
+		   `vehicle_details_purchaseDate`,`vehicle_details_mileage`
+                   ,`vehicle_details_amount`,`vehicle_details_amount`,
+		   `vehicle_status`,`vehicle_engineType`
+                   ,`vehicle_color`,`type_id`,`vehicle_Fuel`
+                   ,`vehicle_registrationDate`,`vehicle_chasisNumber`
+                   ,`vehicle_engineNumber`,`vehicle_details_photo`
+                   ,`vehicle_year`,`vehicle_details_purchasingOfficer`
+		   ,`vehicle_trasmission`,`branch_id`
+		    FROM `vehicle`,`vehicle_details` 
+                    WHERE vehicle.del=0 and `vehicle_details`.`vehicle_id`=`vehicle`.`vehicle_id`" ;
+        
+			$results  = mysqli_query($db_link,$sql);
+			if(mysqli_num_rows($results))
+			{
+			  return $results;
+			}
+			else{
+				return false;
+			}
+
+    }
+    
+    function getvehicleDetails($db_link,$vehicle_id){
+	$sql = "SELECT  `vehicle_plateNumber`,`vehicle_model`
+                ,`vehicle_manufacture`,`vehicle_details_carDealer`,
+		`vehicle_details_purchaseDate`,`vehicle_details_mileage`
+                ,`vehicle_details_amount`,`vehicle_details_amount`,
+		   `vehicle_status`,`vehicle_engineType`
+                   ,`vehicle_color`,`type_id`
+                   ,`vehicle_Fuel`,`vehicle_registrationDate`
+		   ,`vehicle_chasisNumber`,`vehicle_engineNumber`
+                   ,`vehicle_details_photo`,`vehicle_year`
+                   ,`vehicle_details_purchasingOfficer`,`vehicle_trasmission`,`branch_id`
+		    FROM `vehicle`,`vehicle_details` 
+			WHERE vehicle.del=0 and `vehicle_details`.`vehicle_id`=`vehicle`.`vehicle_id` AND `vehicle`.`vehicle_id`=".$vehicle_id;
+			$results  = mysqli_query($db_link,$sql);
+			if(mysqli_num_rows($results))
+			{
+			  return $results;
+			}
+			else{
+				return false;
+			}
+
+}
+    
+    
+    function getVehicleId($db_link,$plate)
+{
+		$sql = "SELECT  `vehicle_id`
+				FROM `vehicle`
+		    WHERE `vehicle_plateNumber`='$plate'";
+			$results  = mysqli_query($db_link,$sql);
+			
+			
+				if(mysqli_num_rows($results))
+				{
+					$data=mysqli_fetch_row($results);
+					return $data[0];
+				}
+}
+    
     function getPlateNumbers($db_link)
     {
                     $sql = "SELECT  `vehicle_id`,`vehicle_plateNumber`
@@ -382,5 +447,16 @@
 				}
 			}	
     }   
+    
+    function getCarType($db_link,$vtype)
+    {
+            $sql="SELECT `type_name` FROM vehicle_type WHERE `type_id`=".$vtype;
+            $results  = mysqli_query($db_link,$sql);
+            if(mysqli_num_rows($results))
+            {
+                    $data=mysqli_fetch_row($results);
+                    return $data[0];
+            }
+    }
 
 ?>
