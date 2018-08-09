@@ -15,7 +15,10 @@
         <?php include("topNav.php"); ?>
         
         <!-- Left side column. contains the logo and sidebar -->
-        <?php include("sideNav.php");?>
+        <?php 
+            include("sideNav.php");
+            
+        ?>
         
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -43,6 +46,7 @@
                         <a href="newrequest.php" class="btn btn-success btn-block margin-bottom">New Request</a>
 
                         <div class="box box-solid">
+                            
                             <div class="box-header with-border">
                               <h3 class="box-title">Folders</h3>
 
@@ -52,23 +56,44 @@
                               </div>
                             </div>
 
+                            
+                            
+                            
                             <div class="box-body no-padding">
                                 
-                              <ul class="nav nav-pills nav-stacked">
-                                  <li ><a href="notifications.php"><i class="fa fa-inbox"></i> Notifications
-                                  <span class="label label-primary pull-right">12</span></a></li>
-                                  
-                                  <li><a href="myrequests.php"><i class="fa fa-envelope-o"></i> My Request</a></li>
-                                
-                                  <!-- Supervisour -->
-                                  <li><a href="triprequests.php"><i class="fa fa-file-text-o"></i> Trip Requests </a></li>
-                                
-                                  <!-- Fleet Officer -->
-                                  <li class="active"><a href="fleetrequests.php"><i class="fa fa-filter"></i> Fleet Request <span class="label label-warning pull-right">65</span></a>
-                                  </li>
-                              </ul>
+                                <ul class="nav nav-pills nav-stacked">
+                                    
+                                    <li><a href="notifications.php"><i class="fa fa-inbox"></i> Notifications
+                                    <span class="label label-primary pull-right">12</span></a></li>
+
+                                    <li><a href="myrequests.php"><i class="fa fa-envelope-o"></i> My Request</a></li>
+
+                                    <!-- Supervisor -->
+                                    <li><a href="triprequests.php"><i class="fa fa-file-text-o"></i> Trip Requests </a></li>
+
+                                    <!-- Fleet Officer -->
+                                    <li class="active"><a href="fleetrequests.php"><i class="fa fa-filter"></i> Fleet Request 
+                                            
+                                                <?php 
+                                                $result = getRequestHistory($db_link); 
+                                                $unread = 0;
+                                                if($result){
+                                                    echo '<span class="label label-warning pull-right">';
+                                                    while($row = mysqli_fetch_row($result)){
+                                                        if($row[13] == "0"){
+                                                            $unread+=1;                    
+                                                        }
+                                                    }
+                                                
+                                                    echo $unread."</span>"; 
+                                                
+                                                }?></a> </li>
+                                            
+                                </ul>
                                 
                             </div>
+                            
+                            
                             
                           <!-- /.box-body -->
                         </div>
@@ -125,7 +150,8 @@
 
                                     <tbody>
                                         <?php  
-                                           $result = getRequestHistory($db_link); 
+                                            $result = getRequestHistory($db_link);
+                                            if($result){
                                             while($row = mysqli_fetch_row($result)){
                                                 
                                                 $date1 = date_create(date(""));
@@ -149,7 +175,7 @@
                                                     echo " <tr>
                                                          <td class='mailbox-star'><a href='#'><i class='fa fa-circle text-aqua'></i></a></td>
                                                          <td class='mailbox-name'>".$row[1]."</a></td>
-                                                         <td class='mailbox-subject'><a href='viewrequest.php'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
+                                                         <td class='mailbox-subject'><a href='viewrequest.php?id=".$row[0]."'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
                                                          <td class='mailbox-date'>".$val."</td>
                                                          <td class='mailbox-date'>closed</td>
                                                      </tr>";
@@ -158,11 +184,12 @@
                                                     echo " <tr>
                                                          <td class='mailbox-star'><a href='#'></i></a></td>
                                                          <td class='mailbox-name'>".$row[1]."</a></td>
-                                                         <td class='mailbox-subject'><a href='viewrequest.php'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
+                                                         <td class='mailbox-subject'><a href='viewrequest.php?id=".$row[0]."'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
                                                          <td class='mailbox-date'>".$val."</td>
                                                          <td class='mailbox-date'>open</td>    
                                                      </tr>";
                                                 }
+                                            }
                                             }
                                        ?>               
                                     </tbody>

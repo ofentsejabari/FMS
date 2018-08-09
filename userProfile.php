@@ -23,20 +23,9 @@
 
 				<!-- Main content -->
 				<section class="content">
-					<?php  
-    //
-    $queryResult= getStaffProfile($db_link,$_SESSION['fmsuser']);
-    $myProfile= mysqli_fetch_row($queryResult);
-
-?>
-    <!-- Main content -->
-    <section class="content">
-        <?php include("profile.php"); ?>
-    </section>
-	
-
+                                    <?php include("profile.php"); ?>
 				</section>
-					<!-- right col -->
+				<!-- right col -->
 			</div>
 			  <!-- /.row (main row) -->
 
@@ -46,71 +35,13 @@
 		  <!-- /.content-wrapper -->
 		<?php include("footer.php"); ?>
 
-			<!-- Control Sidebar -->
+		<!-- Control Sidebar -->
 		<?php include("settings.php"); ?>
-			<!-- /.control-sidebar -->
-		  <!-- Add the sidebar's background. This div must be placed
-			   immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<!-- ./wrapper -->
 
 		<?php include("scripts.php");?>
-        <script>
-
-  
-  function editForm(val)
-  {
-        document.getElementById("firstname").disabled = val;
-        document.getElementById("lastname").disabled = val;
-        document.getElementById("designation").disabled = val;
-        document.getElementById("username").disabled = val;
-        document.getElementById("department").disabled = val;
-        document.getElementById("role").disabled = val;
-        document.getElementById("email").disabled = val;
-        document.getElementById("save").disabled = val;
-        
-   }
-   
- $('#edit').change(function() {
-
-      editForm(!$(this).prop('checked'));   
-  });
-
-  function submitForm(){
-      
-        if(document.getElementById("firstname").value!="" && document.getElementById("lastname").value!="" && document.getElementById("username").value!="" 
-           && document.getElementById("designation").value!="" && document.getElementById("department").value!="" && document.getElementById("role").value!="" 
-           && document.getElementById("role").value!="" ){
-          
-                    var logindata = $(this).serialize();
-                    
-                    $.ajax({
-			type : 'GET', // define the type of HTTP verb we want to use (POST for our form)
-			url : 'db_connect/validate.php?status=editUser'
-					+'&user='+document.getElementById('user').value
-					+'&lastname='+document.getElementById('lastname').value
-					+'&firstname='+document.getElementById('firstname').value
-					+'&username='+document.getElementById('username').value
-					+'&role='+document.getElementById('role').value
-					+'&department='+document.getElementById('department').value
-					+'&designation='+document.getElementById('designation').value
-                                        +'&email='+document.getElementById('email').value
-					,
-					dataType 	: 'html',
-					success		:  
-					function(data){
-                                            alert();
-					}
-		});
-					
-                                       
-        }
-        else{
-             alert("fail"); 
-        }
-  }
-</script>
 
 </body>
 </html>

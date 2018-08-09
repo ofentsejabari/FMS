@@ -107,21 +107,21 @@
 					</div>
 					
 					<div class="form-group">
-						<label>Designation</label>
-						<select id="designation" class="form-control" disabled required>
-							<option value="">Select Designation</option>
-							<?php 
-                                                            $designations=getDesignations($db_link);
-                                                               while($row=mysqli_fetch_row($designations)){
-                                                                     if($row[0]== $myProfile[8]){
-									echo "<option selected value='".$row[0]."'>".$row[1]."</option>";
-                                                                    }
-                                                                    else{
-                                                                        echo "<option  value='".$row[0]."'>".$row[1]."</option>";
-                                                                    }
-                                                            }
-							?>
-						</select>
+                                            <label>Designation</label>
+                                            <select id="designation" class="form-control" disabled required>
+                                                <option value="">Select Designation</option>
+                                                <?php 
+                                                    $designations=getDesignations($db_link);
+                                                    while($row=mysqli_fetch_row($designations)){
+                                                        if($row[0]== $myProfile[8]){
+                                                            echo "<option selected value='".$row[0]."'>".$row[1]."</option>";
+                                                        }
+                                                        else{
+                                                            echo "<option  value='".$row[0]."'>".$row[1]."</option>";
+                                                        }
+                                                    }
+                                                ?>
+                                            </select>
 					</div>
 					
                                     </div>
@@ -185,57 +185,25 @@
 			</div>		
 			
 		</div> 
+                
+                
+                
+                
+                
 		
 		<!-- /.tab-pane -->
-    <div class="tab-pane" id="request">
-			<!---------------->
-	<div class="box">
-            <div class="box-header">
-              <h3 class="box-title"></h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-		<table id="myRequest" class="table table-bordered table-striped">
-                    <thead>
-                            <tr>
-                                <th>Status</th>
-                                <th>Request date</th>
-                                <th>Destination</th>
-                                <th>Departure</th>
-                                <th>Trip start date</th>
-                                <th>Trip end date</th>
-                            </tr>
-                    </thead>
-                    <tbody>
-                            <tr>
-                              <td>Trident</td>
-                              <td>Internet Explorer 4.0</td>
-                              <td>Win 95+</td>
-                              <td> 4</td>
-                              <td>X</td>
-                              <td>X</td>
-                            </tr>
-                    </tbody>
-                    <tfoot>
-                            <tr>
-                                <th>Status</th>
-                                <th>Request date</th>
-                                <th>Destination</th>
-                                <th>Departure</th>
-                                <th>Trip start date</th>
-                                <th>Trip end date</th>
-                            </tr>
-                    </tfoot>
-		</table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-					<!---------------->	
-				</div>
-              <!-- /.tab-pane -->
+                <div class="tab-pane" id="request">
+                    <!---------------->
+                    
+                    <!-- /.box -->	
+                </div>
+                <!-- /.tab-pane -->
+                
+                
+                
+                
 
-              <div class="tab-pane" id="settings">
+                <div class="tab-pane" id="settings">
               
 			  </div>
               <!-- /.tab-pane -->
