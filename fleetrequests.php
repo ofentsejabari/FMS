@@ -169,7 +169,7 @@
                                                     echo " <tr>
                                                          <td class='mailbox-star'><a href='#'><i class='fa fa-circle text-aqua'></i></a></td>
                                                          <td class='mailbox-name'>".$row[1]."</a></td>
-                                                         <td class='mailbox-subject'><a href='viewrequest.php'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
+                                                         <td class='mailbox-subject'><a href='viewrequest.php?id=".$row[0]."'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
                                                          <td class='mailbox-date'>".$val."</td>
                                                          <td class='mailbox-date'>closed</td>
                                                      </tr>";
@@ -178,7 +178,7 @@
                                                     echo " <tr>
                                                          <td class='mailbox-star'><a href='#'></i></a></td>
                                                          <td class='mailbox-name'>".$row[1]."</a></td>
-                                                         <td class='mailbox-subject'><a href='viewrequest.php'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
+                                                         <td class='mailbox-subject'><a href='viewrequest.php?id=".$row[0]."'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
                                                          <td class='mailbox-date'>".$val."</td>
                                                          <td class='mailbox-date'>open</td>    
                                                      </tr>";

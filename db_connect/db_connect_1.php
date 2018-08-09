@@ -830,6 +830,7 @@ function getMyRequestsNo($db_link,$staff,$date){
 				}
 			}	
 }
+
 function getTripNo($db_link,$date){
 	$sql = " SELECT Count(*) 
 			FROM `trip_details`
@@ -998,17 +999,18 @@ function getTripDetailsStats($db_link){
 }
 function getPlateNumeber($db_link,$vehicle_id)
 {
-		$sql = "SELECT  `vehicle_plateNumber`
-				FROM `vehicle`
-		    WHERE `vehicle_id`='$vehicle_id'";
-			$results  = mysqli_query($db_link,$sql);
+	$sql = "SELECT  `vehicle_plateNumber`
+		FROM `vehicle`
+		WHERE `vehicle_id`='$vehicle_id'";
+	
+        $results  = mysqli_query($db_link,$sql);
 			
-			
-				if(mysqli_num_rows($results))
-				{
-					$data=mysqli_fetch_row($results);
-					return $data[0];
-				}
+	
+	if(mysqli_num_rows($results))
+	{
+		$data=mysqli_fetch_row($results);
+		return $data[0];
+	}
 }
 function getFuelHistory($db_link){
 	$sql="SELECT `vehicle_plateNumber`,`opening_odo`,`closing_odo`,CONCAT_WS(' ',`staff_firstname`,`staff_surname`),
@@ -1027,10 +1029,12 @@ function getFuelHistory($db_link){
 }
 
 function getFuelStats($db_link,$vehicle_id){
-		$sql="SELECT Sum(amount) FROM `fuel_history`,`vehicle`,`request`,`trip_details` WHERE `vehicle_plateNumber`='$vehicle_id' 
+	
+        $sql="SELECT Sum(amount) FROM `fuel_history`,`vehicle`,`request`,`trip_details` WHERE `vehicle_plateNumber`='$vehicle_id' 
 		and `vehicle`.`vehicle_id`=`request`.`vehicle_id`
 		and `trip_details`.`request_id`= `request`.`request_id` and `fuel_history`.`trip_id`=`trip_details`.`trip_id`";
 	$results=mysqli_query($db_link,$sql);
+        
 	if($results){
 			if(mysqli_num_rows($results))
 				{
@@ -1052,7 +1056,8 @@ function getVehicles($db_link){
 	
 }
 function getVehicleTypeNo($db_link,$type_id){
-	$sql="SELECT Count(*) FROM `vehicle`,vehicle_details WHERE `del`=0 and vehicle.vehicle_id=vehicle_details.vehicle_id and `type_id`=".$type_id;
+	
+        $sql="SELECT Count(*) FROM `vehicle`,vehicle_details WHERE `del`=0 and vehicle.vehicle_id=vehicle_details.vehicle_id and `type_id`=".$type_id;
 	$results=mysqli_query($db_link,$sql);
 	if($results){
 			if(mysqli_num_rows($results))
@@ -1110,8 +1115,10 @@ function getVehicleTotalUseNo($db_link,$vehicle_id){
 	}
 	
 }
+
 function getVehicleTotalUse($db_link){
-		$sql="SELECT vehicle_id FROM `request` WHERE request_cancelled=0 AND vehicle_id!=''";
+	
+        $sql="SELECT vehicle_id FROM `request` WHERE request_cancelled=0 AND vehicle_id!=''";
 	$results=mysqli_query($db_link,$sql);
 	if($results){
 			return $results;
@@ -1231,6 +1238,7 @@ function getServiceRecords($db_link){
 	}
 	
 }
+
 function getGateInspection($db_link)
 {
 	$sql="SELECT `vehicle_id`,`staff_id`,`jug`, `spare_wheel`, `wheel_spanner`,`trip_details`.`start_date`,`trip_details`.`return_date` ,`trip_details`.`request_id` FROM `gate_inspections`,`request`,`trip_details` 
@@ -1241,6 +1249,7 @@ function getGateInspection($db_link)
 		return $results;
 	}
 }
+
 function getFleetInspection($db_link)
 {
 	$sql="SELECT * FROM `fleet_inspection` WHERE 1";
@@ -1425,6 +1434,7 @@ function keyCollected($db_link,$request_id){
 		}
 
 }
+
 function isclosed($db_link,$request_id){
 		$query="SELECT `request_closure`
 				 FROM `request`

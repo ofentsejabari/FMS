@@ -229,6 +229,8 @@
 	}
     }
     
+
+    
     function getMyRequests($db_link,$staff){
         
          $sql = "SELECT `request_date` FROM `request`
@@ -320,7 +322,67 @@
         }
     }
    
+    //==================================== VEHICLES =====================================================
     
+    function getPlateNumbers($db_link)
+    {
+                    $sql = "SELECT  `vehicle_id`,`vehicle_plateNumber`
+                                    FROM `vehicle`
+                        WHERE 1";
+                            $results  = mysqli_query($db_link,$sql);
+
+
+                                    if(mysqli_num_rows($results))
+                                    {
+                                            return $results ;
+                                    }
+    }
+    
+    function getVehicleTypeNo($db_link,$type_id){
+	$sql="SELECT Count(*) FROM `vehicle`,vehicle_details WHERE `del`=0 and vehicle.vehicle_id=vehicle_details.vehicle_id and `type_id`=".$type_id;
+	$results=mysqli_query($db_link,$sql);
+	if($results){
+			if(mysqli_num_rows($results))
+				{
+					$data=mysqli_fetch_row($results);
+					return $data[0];
+				}
+	}			
+	
+    }
+    
+    function getTripNo($db_link,$date){
+
+        $sql = " SELECT Count(*) 
+            FROM `trip_details`
+            WHERE return_date  BETWEEN '".$date."-01' and '".$date."-31'";
+        
+	$results  = mysqli_query($db_link,$sql);
+	
+	if($results){
+		if(mysqli_num_rows($results))
+		{
+			$data=mysqli_fetch_row($results);
+			return $data[0];
+		}
+	}	
+    }
+    
+    function getRequestNo($db_link,$date){
+	$sql = " SELECT Count(*) 
+			FROM `request`
+			WHERE return_date  BETWEEN '".$date."-01' and '".$date."-31'";
+			$results  = mysqli_query($db_link,$sql);
+			
+			if($results){
+				if(mysqli_num_rows($results))
+				{
+					$data=mysqli_fetch_row($results);
+					return $data[0];
+				}
+			}	
+    }   
+
     function getMyRequestHistory($db_link,$staff_id){
         
 	$query="SELECT CONCAT_WS(' ', `staff_firstname`,`staff_surname`) AS `fullname`,
@@ -349,7 +411,37 @@
 	}
     }
     
+    function getRequestByID($db_link,$requestID){
+        
+	$query = " SELECT CONCAT_WS(' ', `staff_firstname`,`staff_surname`) AS 
+                `fullname`, `request_id`,
+                `staff`.`staff_id`, `vehicle_id`,
+                `request_date`, `request_destination`,
+                `request_reason`, `request_approver_id`,
+                `request_supervisor_id`, `request_level`,
+                `start_date`, `end_date`,
+                `request_view`, `request_rejectReason`,
+                `request_travellers`, `request_approval_date`,
+                `request_supervisor_date`, `request_closure`, 
+                `request_vehicle_transmission`, `type_id`,
+                `request_duty_nature`, `request_supervisor_reason`,
+                `request_cancelled`, `request_keyCollectiondate`,
+                `request_keyReturnDate`, `request_supervisorRejectReason`,
+                `branch_id`, `request_approval_note`,
+                `request_driver`, `key_return_reminder`
+                FROM `request`,`staff`
+                WHERE `staff`.`staff_id`=`request`.`staff_id` 
+                AND `request`.`request_id`=".$requestID;
+ 
+	$results  = mysqli_query($db_link,$query);
+        
+	if($results){
+            $rs = mysqli_fetch_row($results);
+            return $rs;
+	}
+    }
     
+ 
     
     
     

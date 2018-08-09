@@ -59,3 +59,12 @@
 <script src="assets/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="assets/bootoast/dist/bootoast.min.js"></script>
 <script src="assets/toggle-master/js/bootstrap-toggle.js"></script>
+  
+   <script src="assets/chart.js/Chart.js"></script>
+      <script src="assets/canvasjs/jquery.canvasjs.min.js"></script>
+   
+
+
+  
+  
+
