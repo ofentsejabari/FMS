@@ -123,11 +123,11 @@
                ,`end_date`,`request_destination`
                ,`request_reason`,`request_level`
                ,`request_travellers`,`request_approver_id`
-            ,`request_approval_date`,`request_id`
+               ,`request_approval_date`,`request_id`
                ,`request_rejectReason`,`request_view`
                ,`request_vehicle_transmission`,type_id
                ,`request_cancelled`,`request`.`branch_id`
-            ,`designation_id`,`dept_id`
+               ,`designation_id`,`dept_id`
                ,`request_driver`
                FROM `request`,`staff`
             WHERE `staff`.`staff_id`=`request`.`staff_id` 

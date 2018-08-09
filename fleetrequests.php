@@ -63,14 +63,6 @@
                                 
                                 <ul class="nav nav-pills nav-stacked">
                                     
-                                    <li><a href="notifications.php"><i class="fa fa-inbox"></i> Notifications
-                                    <span class="label label-primary pull-right">12</span></a></li>
-
-                                    <li><a href="myrequests.php"><i class="fa fa-envelope-o"></i> My Request</a></li>
-
-                                    <!-- Supervisor -->
-                                    <li><a href="triprequests.php"><i class="fa fa-file-text-o"></i> Trip Requests </a></li>
-
                                     <!-- Fleet Officer -->
                                     <li class="active"><a href="fleetrequests.php"><i class="fa fa-filter"></i> Fleet Request 
                                             
@@ -88,6 +80,15 @@
                                                     echo $unread."</span>"; 
                                                 
                                                 }?></a> </li>
+                                    
+
+                                    <li><a href="myrequests.php"><i class="fa fa-envelope-o"></i> My Request</a></li>
+
+                                    <!-- Supervisor -->
+                                    <li><a href="triprequests.php"><i class="fa fa-file-text-o"></i> Trip Requests </a></li>
+
+                                    <li><a href="notifications.php"><i class="fa fa-inbox"></i> Notifications
+                                    <span class="label label-primary pull-right">12</span></a></li>
                                             
                                 </ul>
                                 

@@ -34,7 +34,7 @@
                 
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="compose.html" class="btn btn-success btn-block margin-bottom">New Request</a>
+                        <a href="newrequest.php" class="btn btn-success btn-block margin-bottom">New Request</a>
 
                         <div class="box box-solid">
                             <div class="box-header with-border">
@@ -49,14 +49,7 @@
                             <div class="box-body no-padding">
                                 
                               <ul class="nav nav-pills nav-stacked">
-                                  <li class="active"><a href="notifications.php"><i class="fa fa-inbox"></i> Notifications
-                                  <span class="label label-primary pull-right">12</span></a></li>
                                   
-                                  <li><a href="myrequests.php"><i class="fa fa-envelope-o"></i> My Request</a></li>
-                                
-                                  <!-- Supervisour -->
-                                  <li><a href="triprequests.php"><i class="fa fa-file-text-o"></i> Trip Requests </a></li>
-                                
                                   <!-- Fleet Officer -->
                                   <li ><a href="fleetrequests.php"><i class="fa fa-filter"></i> Fleet Request 
                                             
@@ -74,6 +67,15 @@
                                                     echo $unread."</span>"; 
                                                 
                                                 }?></a> </li>
+                                  <li><a href="myrequests.php"><i class="fa fa-envelope-o"></i> My Request</a></li>
+                                
+                                  <!-- Supervisour -->
+                                  <li><a href="triprequests.php"><i class="fa fa-file-text-o"></i> Trip Requests </a></li>
+                                  
+                                  <li class="active"><a href="notifications.php"><i class="fa fa-inbox"></i> Notifications
+                                  <span class="label label-primary pull-right">12</span></a></li>
+                                
+                                  
                               </ul>
                                 
                             </div>

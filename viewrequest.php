@@ -14,7 +14,9 @@
             <?php include("topNav.php"); ?>
 
             <!-- Left side column. contains the logo and sidebar -->
-            <?php include("sideNav.php");?>
+            <?php include("sideNav.php");
+                $result = getRequestByID($db_link, $_GET["id"]);
+            ?>
 
                         
                 <!-- Content Wrapper. Contains page content -->
@@ -22,7 +24,8 @@
                     
                     <!-- Content Header (Page header) -->
                     <section class="content-header">
-                        <h1> Request Details <small>#007612</small> </h1>
+                        <h1> Request Details <small>
+                            <?php  echo '#'.$result[1]; ?></small> </h1>
                       
                         <ol class="breadcrumb">
                             <li><a href="home.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -32,7 +35,6 @@
                     </section>
                   
                   
-                    
                     
                     <!-- Main content -->
                     <section class="content">
@@ -46,9 +48,6 @@
                                 <ul class="timeline timeline-inverse">
 
                                     <?php
-
-                                        $result = getRequestByID($db_link, $_GET["id"]);
-                                        //print_r($result);
 
                                         echo "<li class='time-label'>
                                                    <span class='bg-green'> ".explode(" ", $result[4])[0]."</span>
@@ -69,8 +68,11 @@
 
                                                 <div class="row invoice-info">
                                                     <div class="col-sm-12 invoice-col">
+                                                        
+                                                        
+                                                        
 
-                                                        <ol>
+<!--                                                        <ol>
                                                             <li>fullname -<?php echo $result[0]; ?></li>
                                                             <li>request_id -<?php echo $result[1]; ?></li>
                                                             <li>staff_id -<?php echo $result[2]; ?></li>
@@ -103,7 +105,67 @@
                                                             <li>key_return_reminder -<?php echo $result[29]; ?></li>
                                                                 
                                                                 
-                                                        </ol>
+                                                        </ol>-->
+
+
+                                                        <p class="lead">Trip Summary</p>
+
+                                                        <div class="row">
+                                                            
+                                                            <div class="col-md-4">
+                                                                
+                                                                <table class="table table-responsive table-striped">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th ><p>Trip Start:</p></th>
+                                                                        <td ><?php echo $result[10]; ?></td>
+                                                                        <th >Trip Ends:</th>
+                                                                        <td ><?php echo $result[11]; ?></td>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>
+                                                                        <th >Assigned Supervisor:</th>
+                                                                        <td ><?php 
+                                                                                if($result[16] != ""){
+                                                                                    echo getUserFull($db_link,$result[8]).
+                                                                                            ' <span class="label label-success">Approved</span> '; 
+                                                                                }else{
+                                                                                    echo getUserFull($db_link,$result[8]).
+                                                                                            ' <span class="label label-warning">Pending</span> '; 
+                                                                                }
+                                                                                
+                                                                            ?></td>
+                                                                        
+                                                                        <?php if($result[7] != "0"){ ?>
+                                                                        <th >Fleet Officer:</th>
+                                                                        <td ><?php 
+                                                                                if($result[13] == ""){
+                                                                                    echo getUserFull($db_link,$result[7]).
+                                                                                            ' <span class="label label-success">Approved</span> '; 
+                                                                                }else{
+                                                                                    echo getUserFull($db_link,$result[7]).
+                                                                                            ' <span class="label label-warning">Rejected</span> '; 
+                                                                                }
+                                                                            
+                                                                            ?></td>
+                                                                        <?php } ?>
+                                                                    </tr>
+                                                              </tbody></table>
+                                                                
+                                                            </div>
+                                                            
+                                                            <div class="col-md-4">
+                                                                
+                                                                <table class="table table-responsive table-striped">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th >Purpose of Trip:</th>
+                                                                        <td ><?php echo $result[6]; ?></td>
+                                                                    </tr>
+                                                              </tbody></table>
+                                                                
+                                                            </div>
+                                                        </div>
 
                                                     </div>
                                                     <!-- /.col -->
