@@ -397,14 +397,17 @@ if($_GET['status']=="addDept"){
   }
   
 if($_GET['status']=="request"){
+    
+                                  $startEnd =explode("-",$_GET['reservation']);
+                                //  echo $startEnd[0]." ".$startEnd[1];
 	 
 				  $query="INSERT INTO `request`(`request_id`, `staff_id`, `vehicle_id`, `request_date`, `request_destination`, 
 				  `request_reason`, `request_approver_id`, `request_supervisor_id`, `request_level`, `start_date`, `end_date`, 
 				  `request_view`, `request_rejectReason`, `request_travellers`, `request_approval_date`, `request_supervisor_date`,
 				   `request_closure`, `request_vehicle_transmission`, `type_id`, `request_duty_nature`, `request_supervisor_reason`,`branch_id`,`request_driver`)
-					VALUES (0,".$_GET['user_id'].",0,now(),'".$_GET['destination']."','".$_GET['reason']."',0,'".$_GET['supervisor']."',
-					0,'".$_GET['start']."','".$_GET['end']."',0,'',".$_GET['travelling'].",'','',
-					0,".$_GET['gear'].",".$_GET['type'].",'','',".$_GET['branch'].",'".$_GET['driver']."')";
+					VALUES (0,".$_GET['user'].",0,now(),'".$_GET['destination']."','".$_GET['reason']."',0,'".$_GET['supervisor']."',
+					0,'".$startEnd[0]."','".$startEnd[1]."',0,'',".$_GET['travelling'].",'','',
+					0,".$_GET['transmission'].",".$_GET['vehicleType'].",'','',".$_GET['branch'].",'".$_GET['drivers']."')";
 							
 					$result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));
 
@@ -416,10 +419,10 @@ if($_GET['status']=="request"){
 								."\n"
 								."__________________________________________"
 								."\n"
-								."Employee : ".getUserFull($db_link,$_GET['user_id'])
+								."Employee : ".getUserFull($db_link,$_GET['user'])
 								."\n Destination :".$_GET['destination']
-								."\n Trip start:".$_GET['start']
-								."\n Trip End:".$_GET['end']
+								."\n Trip start:".$startEnd[0]
+								."\n Trip End:".$startEnd[1]
 								."\n Reason :".substr($_GET['reason'],3,-4)
 								
 								."\n"
@@ -431,8 +434,9 @@ if($_GET['status']=="request"){
 										emailSender('fms',$subject,$message);
 								}
 								else{
-									$to=getUser($db_link,$_GET['supervisor']);
-									emailSender($to,$subject,$message);
+									$to= getStaffProfile($db_link,$_GET['supervisor']);
+                                                                        $data=mysqli_fetch_row($to);
+									//emailSender($data[1],$subject,$message);
 								}
 								
 					}
@@ -567,9 +571,8 @@ if($_GET['status']=="editUser"){
                    `staff_firstname`='".$_GET['firstname']."',
                    `staff_username`='".$_GET['username']."',
                    `role_id`='".$_GET['role']."',
-                    `staff_email`='".$_GET['email']."',
                    `dept_id`=".$_GET['department'].",
-                   `designation_id`=".$_GET['designation']." 
+                   `designation_id`=".$_GET['designation'].", 
                     WHERE staff_id=".$_GET['user'];
 
 
