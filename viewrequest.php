@@ -111,15 +111,15 @@
                                                                 <table class="table table-responsive table-striped">
                                                                     <tbody>
                                                                         <tr>
-                                                                            <th ><p>Trip Start:</p></th>
-                                                                            <td ><?php echo $result[10]; ?></td>
-                                                                            <th >Trip Ends:</th>
-                                                                            <td ><?php echo $result[11]; ?></td>
+                                                                            <th><p>Trip Start:</p></th>
+                                                                            <td><?php echo $result[10]; ?></td>
+                                                                            <th>Trip Ends:</th>
+                                                                            <td><?php echo $result[11]; ?></td>
                                                                         </tr>
 
                                                                         <tr>
-                                                                            <th >Assigned Supervisor:</th>
-                                                                            <td ><?php 
+                                                                            <th>Assigned Supervisor:</th>
+                                                                            <td><?php 
                                                                                     if($result[16] != ""){
                                                                                         echo getUserFull($db_link,$result[8]).
                                                                                                 ' <span class="label label-success">Approved</span> '; 
@@ -131,8 +131,8 @@
                                                                                 ?></td>
 
                                                                             <?php if($result[7] != "0"){ ?>
-                                                                            <th >Fleet Officer:</th>
-                                                                            <td ><?php 
+                                                                            <th>Fleet Officer:</th>
+                                                                            <td><?php 
                                                                                     if($result[13] == ""){
                                                                                         echo getUserFull($db_link,$result[7]).
                                                                                                 ' <span class="label label-success">Approved</span> '; 
@@ -200,19 +200,34 @@
                                             <div class="timeline-footer">
 
                                                 <?php 
-
-                                                    if($result[23] != "0" && $result[22] != "1"){
+                                                
+                                                    if($result[23] == "0" && $result[22] == "0" && $result[2] == $_SESSION['fmsuser']){
                                                         //-- keys not collected and request not cancelled already--
-                                                        echo "<a class='btn btn-primary btn-xs'>Cancel Request</a>";
+                                                        echo "<button type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#cancel-request'> 
+                                                                Cancel Request 
+                                                             </button>";
                                                     }
+                                                    
+                                                    if($result[8] == $_SESSION['fmsuser']){
 
+                                                        if($result[22] == "0" && $result[15] == "" && $result[16] == ""){//-- Not Cancelled, Not approved, Not supervisor processed --
 
-                                                    if($result[21] == "0" && $result[15] == "" && $result[16] == ""){//-- Not Cancelled, Not approved, Not supervisor processed --
-                                                        echo " <button type='button' class='btn btn-danger btn-xs' data-toggle='modal' data-target='#modal-default'> 
-                                                                Reject 
-                                                               </button>
-                                                               <a class='btn btn-success btn-xs'>Approve</a>";
-                                                    } 
+                                                            echo " <button type='button' class='btn btn-danger btn-xs' data-toggle='modal' data-target='#modal-default'> 
+                                                                    Reject 
+                                                                   </button>
+                                                                   
+                                                                   <button type='button' class='btn btn-success btn-xs' data-toggle='modal' data-target='#modal-default'> 
+                                                                    Approve 
+                                                                   </button>";
+                                                        } 
+                                                    }
+                                                    
+                                                    if($result[22] == "1"){
+                                                        
+                                                        echo '<h4><span class="label label-danger">Trip Cancelled</span></h4>';
+                                                        
+                                                    }
+                                                    
                                                 ?>
                                             </div>
                                             <!--------------------------------------->
@@ -261,12 +276,11 @@
                                             
                                             
                                             if($result[7] == "" && $result[22] != "1"){ //-- not proceed and not cancelled --
-                                                echo "<div class='timeline-footer'>
-                                                            <a class='btn btn-success btn-xs'>Approve</a>
-                                                            <a class='btn btn-danger btn-xs'>Reject</a>
-                                                        </div>";
-                                            }
-                                                        
+                                                echo"<div class='timeline-footer'>
+                                                         <a class='btn btn-success btn-xs'>Approve</a>
+                                                         <a class='btn btn-danger btn-xs'>Reject</a>
+                                                     </div>";
+                                            }          
                                             echo " </div> </li>";
                                         }
 
@@ -365,6 +379,36 @@
                 <!-- /.modal -->    
                 
                 
+                
+                <div class="modal fade" id="cancel-request">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">Cancel Request</h4>
+                            </div>
+                            
+                            
+                            <div class="modal-body">
+                                <p>Are you sure you want to cancel request?</p>
+                            </div>
+                            
+                            
+                            <div class="modal-footer">
+                                <!--<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>-->
+                                <button type="button" class="btn btn-primary" onclick="cancelPrep('<?php echo $result[1] ?>')">Save changes</button>
+                            </div>
+                            
+                        </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                
+                
             
             
             <?php include("footer.php"); ?>
@@ -378,6 +422,29 @@
     <!-- ./wrapper -->
 
     <?php include("scripts.php"); ?>
+    
+    
+    <script>
+    
+    function cancelPrep(request_id){
+
+	var formData = $(this).serialize();
+            $.ajax({
+            type : 'GET', // define the type of HTTP verb we want to use (POST for our form)
+            url  : 'db_connect/validate.php?status=cancel&request_id='+request_id,
+            data : formData,
+            dataType : 'html',
+            success: 
+                function(data){
+                        
+                }
+	});
+}
+    
+    </script>  
+    
+    
+    
 
     </body>
 </html>

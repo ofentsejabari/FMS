@@ -134,7 +134,7 @@
                                             <th> </th>
                                             <th> </th>
                                             <th> </th>
-                                            <th > </th>
+                                            <!--<th > </th>-->
                                         </tr>
                                     </thead>
 
@@ -145,7 +145,7 @@
                                             if($result){
                                                 while($row = mysqli_fetch_row($result)){
 
-                                                    $f = "<ol>
+                                                    $f  =   "<ol>
                                                                 <li>fullname -".$row[0]."</li>
                                                                 <li>request_id -". $row[1]."</li>
                                                                 <li>staff_id -". $row[2]."</li>
@@ -176,8 +176,6 @@
                                                                 <li>request_approval_note -". $row[27]."</li>
                                                                 <li>request_driver -". $row[28]."</li>
                                                                 <li>key_return_reminder -". $row[29]."</li>
-
-
                                                             </ol>";
 
                                                     $date1 = date_create(date(""));
@@ -209,17 +207,16 @@
 
                                                     if(strlen($row[13]) > 0 || strlen($row[25]) > 2){$fm = "text-maroon";}
 
-                                                    echo "<tr>  <td class='mailbox-star'><a href='#'><i class='fa fa-circle ".$fm."'></i></a></td>
-                                                                <td class='mailbox-name'><a href='#'><i class='fa fa-pencil text-yellow'></i></a></td>
+                                                    echo"<tr>   <td class='mailbox-star'><a href='#'><i class='fa fa-circle ".$fm."'></i></a></td>
+                                                                <td class='mailbox-name'>".$row[10]." - ".$row[11]."</td>
 
-                                                                <td class='mailbox-date'><a href='viewrequest.php?id=".$row[1]."'><b>(".$row[10]." - ".$row[11].")</b> -"
-                                                                . "From <b>".strtoupper(getBranchName($db_link,$row[26]))."</b>"
-                                                                . " to  <b>".strtoupper($row[5])."</b> </a>
+                                                                <td class='mailbox-date'><a href='viewrequest.php?id=".$row[1]."'"
+                                                                 . " From <b>".strtoupper(getBranchName($db_link,$row[26]))."</b>"
+                                                                 . " to  <b>".strtoupper($row[5])."</b> </a>
                                                                 </td>
 
                                                                 <td class='mailbox-date'>".$val."</td>
-                                                                <td class='mailbox-date'></td>
-                                                          </tr>";
+                                                        </tr>";
                                                 }
                                             }
                                        ?>               

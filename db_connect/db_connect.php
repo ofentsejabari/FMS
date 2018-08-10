@@ -515,7 +515,7 @@
             `request_driver`, `key_return_reminder`
             FROM `request`,`staff`
             WHERE `staff`.`staff_id`=`request`.`staff_id` 
-            AND `request`.`staff_id`=".$staff_id;
+            AND `request`.`staff_id`=".$staff_id. " ORDER BY `request_id` DESC";
         	
 	$results  = mysqli_query($db_link,$query);
 	if($results){
@@ -545,7 +545,7 @@
                 `request_driver`, `key_return_reminder`
                 FROM `request`,`staff`
                 WHERE `staff`.`staff_id`=`request`.`staff_id` 
-                AND `request`.`request_id`=".$requestID;
+                AND `request`.`request_id`=".$requestID . " ORDER BY `request_id` DESC";
  
 	$results  = mysqli_query($db_link,$query);
         
