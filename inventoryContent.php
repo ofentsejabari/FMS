@@ -61,7 +61,8 @@
                   <div class="input-group">
                         
                         
-                      <a type="button" onclick="addVehicle()" class="btn btn-primary "> Add</a>
+                      <a type="button" href="addVehicleForm.php"  class="btn btn-primary "> Add</a>
+                      
                         
                     <!-- /btn-group -->
                   </div>
@@ -132,9 +133,14 @@
                                                             <div>Color:  <b> <?php echo $vehicle[10]; ?> </b></div>
                                                             <div>Valid until end of:  </div>
                                                        </div>
-                                                        <b> <?php $date = DateTime::createFromFormat("Y-m-d",$vehicle[13]);
-                                                                echo $date->format("M")." ".$date->format("Y");
-                                                                ?></b>
+                                                            <b> 
+                                                                <?php 
+                                                                    if($vehicle[13]!=""){
+                                                                        $date = DateTime::createFromFormat("Y-m-d",$vehicle[13]);
+                                                                        echo $date->format("M")." ".$date->format("Y");
+                                                                    }    
+                                                                ?>
+                                                            </b>
                                                        
                                                    </div>
                                                </div>
