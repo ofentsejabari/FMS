@@ -45,6 +45,9 @@
   <link href="assets/toggle-master/css/bootstrap-toggle.css" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/select2/dist/css/select2.min.css">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/animate.min.css">
+  
   
  
   
@@ -52,7 +55,21 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   
 </head>
+<style>
+    .example-modal .modal {
+      position: relative;
+      top: auto;
+      bottom: auto;
+      right: auto;
+      left: auto;
+      display: block;
+      z-index: 1;
+    }
 
+    .example-modal .modal {
+      background: transparent !important;
+    }
+  </style>
 <?php 
     if(!isset($_SESSION['fmsuser'])){
        if(isset($page)){

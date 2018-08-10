@@ -27,12 +27,12 @@
 
 			<form  action="<?php echo $_SERVER['PHP_SELF'];?>" method="post" id="loginForm" >
 				<div class="form-group has-feedback">
-					<input type="text" id="username"name="username" class="form-control" placeholder="Username">
+                                    <input type="text" id="username"name="username" class="form-control" placeholder="Username" required>
 					<span class="fa fa-user form-control-feedback"></span>
 				</div>
 				
 				<div class="form-group has-feedback">
-					<input type="password" id="userpassword" name="userpassword" class="form-control" placeholder="Password">
+					<input type="password" id="userpassword" name="userpassword" class="form-control" placeholder="Password" required>
 					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 				</div>
 				<div class="row">
@@ -60,6 +60,27 @@
 		?>   
 	</div>
 		
+    
+    
+        <div class="modal modal-warning fade" id="modal-warning">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    
+                    <div class="modal-body text-center">
+                      <p>Incorrect password and username combination  </p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                  </div>
+
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+        </div>
+    
+    
+    
 	<script>
 		$('#loginForm').submit(function(event) {
 			$('#error').remove();					
@@ -79,14 +100,7 @@
 					
 				}
                                 else{
-                                        bootoast.toast({
-                                          message: 'This is a warning toast message',
-                                               type: 'warning',
-                                               position: 'top-right',
-                                                timeout: null,
-                                                animationDuration: 300,
-                                                dismissible: true
-                                        });
+                                    $("#modal-warning").modal();
 				}
 				
 			});

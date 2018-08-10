@@ -60,11 +60,8 @@
                   <!-- /btn-group -->
                   <div class="input-group">
                         
-                        <div class="input-group-btn">
-                            
-                            <a type="button" class="btn btn-primary btn-flat"> <i class="fa fa-add"></i>Add</a>
-                        </div>
                         
+                      <a type="button" onclick="addVehicle()" class="btn btn-primary "> Add</a>
                         
                     <!-- /btn-group -->
                   </div>
@@ -141,6 +138,7 @@
                                                        
                                                    </div>
                                                </div>
+                                               
                                            </div>
                                        </div>
 
@@ -154,6 +152,95 @@
         <!-- /.col -->
       </div>
    
+
+
+  <div class="modal" id="modal-default">
+          <div class="modal-dialog ">
+            <div class="modal-content col-md-12">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Vehicle Form</h4>
+              </div>
+              <div class="modal-body">
+                  <form>
+                                  <div class="card-body">
+                                            <div class="row">
+                                              <div class="col-md-6">
+                                                <div class="form-group">
+                                                  <label>Minimal</label>
+                                                  <select class="form-control select2" style="width: 100%;">
+                                                    <option selected="selected">Alabama</option>
+                                                    <option>Alaska</option>
+                                                    <option>California</option>
+                                                    <option>Delaware</option>
+                                                    <option>Tennessee</option>
+                                                    <option>Texas</option>
+                                                    <option>Washington</option>
+                                                  </select>
+                                                </div>
+                                                <!-- /.form-group -->
+                                                <div class="form-group">
+                                                  <label>Disabled</label>
+                                                  <select class="form-control select2" disabled="disabled" style="width: 100%;">
+                                                    <option selected="selected">Alabama</option>
+                                                    <option>Alaska</option>
+                                                    <option>California</option>
+                                                    <option>Delaware</option>
+                                                    <option>Tennessee</option>
+                                                    <option>Texas</option>
+                                                    <option>Washington</option>
+                                                  </select>
+                                                </div>
+                                                <!-- /.form-group -->
+                                              </div>
+                                              <!-- /.col -->
+                                              <div class="col-md-6">
+                                                <div class="form-group">
+                                                  <label>Multiple</label>
+                                                  <select class="form-control select2" multiple="multiple" data-placeholder="Select a State"
+                                                          style="width: 100%;">
+                                                    <option>Alabama</option>
+                                                    <option>Alaska</option>
+                                                    <option>California</option>
+                                                    <option>Delaware</option>
+                                                    <option>Tennessee</option>
+                                                    <option>Texas</option>
+                                                    <option>Washington</option>
+                                                  </select>
+                                                </div>
+                                                <!-- /.form-group -->
+                                                <div class="form-group">
+                                                  <label>Disabled Result</label>
+                                                  <select class="form-control select2" style="width: 100%;">
+                                                    <option selected="selected">Alabama</option>
+                                                    <option>Alaska</option>
+                                                    <option disabled="disabled">California (disabled)</option>
+                                                    <option>Delaware</option>
+                                                    <option>Tennessee</option>
+                                                    <option>Texas</option>
+                                                    <option>Washington</option>
+                                                  </select>
+                                                </div>
+                                                <!-- /.form-group -->
+                                              </div>
+                                              <!-- /.col -->
+                                            </div>
+                                <!-- /.row -->
+                              </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" onclick="" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
+
 <script>
 
     
@@ -171,6 +258,12 @@
                 li[i].style.display = "none";
             }
         }
+    }
+    
+    function addVehicle(){
+         $("#modal-default").modal();
+        
+        
     }
 </script>
     <!-- /.row -->

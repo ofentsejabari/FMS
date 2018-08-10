@@ -227,7 +227,7 @@
                         <div class="box-footer">
                             <div class="pull-right">
                                 <button type="reset" class="btn btn-default"><i class="fa fa-trash"></i> &nbsp; Clear </button>
-                                <button type="submit" onclick="submitForm()" class="btn btn-primary"><i class="fa fa-send"></i> &nbsp; Send </button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-send"></i> &nbsp; Send </button>
                             </div>
                             <a href="fleetrequests.php"  class="btn btn-default"><i class="fa fa-times"></i> &nbsp; Discard </a>
                         </div>
@@ -243,10 +243,47 @@
         </section>
         <!-- /.content -->
     </div>
-
-  
-  
-  
+    
+    
+    
+    <!---modal---->
+        <div class="modal modal-success fade" id="modal-success">
+          <div class="modal-dialog">
+            <div class="modal-content">
+             
+              <div class="modal-body text-center">
+                    <p>Successfully Submitted</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+    
+      <div class="modal modal-warning fade" id="modal-warning">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Warning Modal</h4>
+              </div>
+              <div class="modal-body">
+                <p>An error occured while submiting.. plese refresh the page and try again.. if the error persists contact administator</p>
+              </div>
+            
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        
+    
+    
+    
     <!-- /.content-wrapper -->
     <?php include("footer.php"); ?>
 
@@ -337,7 +374,8 @@
    * 
    */
   
-    function submitForm(){
+$('#requestForm').submit(function(event) {
+    
       // drivers department trasmission
         if(document.getElementById("destination").value!="" && document.getElementById("drivers").value!=""
            && document.getElementById("branch").value!="" && document.getElementById("reason").value!="" 
@@ -345,16 +383,7 @@
            && document.getElementById("supervisor").value!="" && document.getElementById("transmission").value!=""
            && document.getElementById("vehicleType").value!=""
                 ){
-                    alert('&user='+document.getElementById("user").value
-                            +'&destination='+document.getElementById("destination").value
-                            +'&drivers='+document.getElementById("drivers").value
-                            +'&branch='+document.getElementById("branch").value
-                            +'&reason='+document.getElementById("reason").value
-                            +'&travelling='+document.getElementById("travelling").value
-                            +'&reservation='+document.getElementById("reservation").value
-                            +'&supervisor='+document.getElementById("supervisor").value
-                            +'&transmission='+document.getElementById("transmission").value
-                            +'&vehicleType='+document.getElementById("vehicleType").value);
+                   
                     var logindata = $(this).serialize();
                     
                     $.ajax({
@@ -374,17 +403,19 @@
                             dataType 	: 'html',
                             success		:  
                             function(data){
-                                alert(data);
+                                   $("#modal-success").modal();
                             }
                     });
 					
                                        
         }
         else{
-            alert("failure");
-                
+            
+            $("#modal-warning").modal();
         }
-  }
+        
+        event.preventDefault();
+  });
   
   
 </script>

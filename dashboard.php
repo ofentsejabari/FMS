@@ -134,8 +134,19 @@
             </div>
             
         </section> 
-    </div>
-
+        <?php include 'morris_dashboard_data.php'; ?>
+        <section class="col-lg-6 connectedSortable">
+              <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Vehicle Useful life
+                        </div>
+                        <div class="panel-body">
+							<div id="chartContainer2" style="height: 200px; width: 100%;"></div>
+                            <a href="vehicle_depreciation.php" class="btn btn-default btn-block">View Details</a>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+      </section>
 		
 
 	<script>
