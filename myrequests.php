@@ -145,7 +145,7 @@
                                             if($result){
                                                 while($row = mysqli_fetch_row($result)){
 
-                                                    echo "<ol>
+                                                    $f = "<ol>
                                                                 <li>fullname -".$row[0]."</li>
                                                                 <li>request_id -". $row[1]."</li>
                                                                 <li>staff_id -". $row[2]."</li>
@@ -209,19 +209,17 @@
 
                                                     if(strlen($row[13]) > 0 || strlen($row[25]) > 2){$fm = "text-maroon";}
 
-                                                    echo "<tr><td class='mailbox-star'><a href='#'><i class='fa fa-circle ".$fm."'></i></a></td>
+                                                    echo "<tr>  <td class='mailbox-star'><a href='#'><i class='fa fa-circle ".$fm."'></i></a></td>
                                                                 <td class='mailbox-name'><a href='#'><i class='fa fa-pencil text-yellow'></i></a></td>
 
-                                                           <td class='mailbox-date'><a href='viewrequest.php?id=".$row[1]."'><b>(".$row[10]." - ".$row[11].")</b> -"
-                                                           . "From <b>".strtoupper(getBranchName($db_link,$row[26]))."</b>"
-                                                           . " to  <b>".strtoupper($row[5])."</b> </a>
-                                                           </td>
+                                                                <td class='mailbox-date'><a href='viewrequest.php?id=".$row[1]."'><b>(".$row[10]." - ".$row[11].")</b> -"
+                                                                . "From <b>".strtoupper(getBranchName($db_link,$row[26]))."</b>"
+                                                                . " to  <b>".strtoupper($row[5])."</b> </a>
+                                                                </td>
 
-                                                           <td class='mailbox-date'>".$val."</td>
-                                                           <td class='mailbox-date'></td>
+                                                                <td class='mailbox-date'>".$val."</td>
+                                                                <td class='mailbox-date'></td>
                                                           </tr>";
-
-
                                                 }
                                             }
                                        ?>               

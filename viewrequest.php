@@ -24,8 +24,8 @@
                     
                     <!-- Content Header (Page header) -->
                     <section class="content-header">
-                        <h1> Request Details <small>
-                            <?php  echo '#'.$result[1]; ?></small> </h1>
+                        
+                        <h1> Request Details <small> <?php  echo '#'.$result[1]; ?> </small> </h1>
                       
                         <ol class="breadcrumb">
                             <li><a href="home.php"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -33,7 +33,6 @@
                         </ol>
                       
                     </section>
-                  
                   
                     
                     <!-- Main content -->
@@ -48,11 +47,9 @@
                                 <ul class="timeline timeline-inverse">
 
                                     <?php
-
                                         echo "<li class='time-label'>
                                                    <span class='bg-green'> ".explode(" ", $result[4])[0]."</span>
                                               </li>";
-
                                     ?>
 
                                     <li>
@@ -69,9 +66,6 @@
                                                 <div class="row invoice-info">
                                                     <div class="col-sm-12 invoice-col">
                                                         
-                                                        
-                                                        
-
 <!--                                                        <ol>
                                                             <li>fullname -<?php echo $result[0]; ?></li>
                                                             <li>request_id -<?php echo $result[1]; ?></li>
@@ -115,54 +109,84 @@
                                                             <div class="col-md-4">
                                                                 
                                                                 <table class="table table-responsive table-striped">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th ><p>Trip Start:</p></th>
-                                                                        <td ><?php echo $result[10]; ?></td>
-                                                                        <th >Trip Ends:</th>
-                                                                        <td ><?php echo $result[11]; ?></td>
-                                                                    </tr>
-                                                                    
-                                                                    <tr>
-                                                                        <th >Assigned Supervisor:</th>
-                                                                        <td ><?php 
-                                                                                if($result[16] != ""){
-                                                                                    echo getUserFull($db_link,$result[8]).
-                                                                                            ' <span class="label label-success">Approved</span> '; 
-                                                                                }else{
-                                                                                    echo getUserFull($db_link,$result[8]).
-                                                                                            ' <span class="label label-warning">Pending</span> '; 
-                                                                                }
-                                                                                
-                                                                            ?></td>
-                                                                        
-                                                                        <?php if($result[7] != "0"){ ?>
-                                                                        <th >Fleet Officer:</th>
-                                                                        <td ><?php 
-                                                                                if($result[13] == ""){
-                                                                                    echo getUserFull($db_link,$result[7]).
-                                                                                            ' <span class="label label-success">Approved</span> '; 
-                                                                                }else{
-                                                                                    echo getUserFull($db_link,$result[7]).
-                                                                                            ' <span class="label label-warning">Rejected</span> '; 
-                                                                                }
-                                                                            
-                                                                            ?></td>
-                                                                        <?php } ?>
-                                                                    </tr>
-                                                              </tbody></table>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th ><p>Trip Start:</p></th>
+                                                                            <td ><?php echo $result[10]; ?></td>
+                                                                            <th >Trip Ends:</th>
+                                                                            <td ><?php echo $result[11]; ?></td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <th >Assigned Supervisor:</th>
+                                                                            <td ><?php 
+                                                                                    if($result[16] != ""){
+                                                                                        echo getUserFull($db_link,$result[8]).
+                                                                                                ' <span class="label label-success">Approved</span> '; 
+                                                                                    }else{
+                                                                                        echo getUserFull($db_link,$result[8]).
+                                                                                                ' <span class="label label-warning">Pending</span> '; 
+                                                                                    }
+
+                                                                                ?></td>
+
+                                                                            <?php if($result[7] != "0"){ ?>
+                                                                            <th >Fleet Officer:</th>
+                                                                            <td ><?php 
+                                                                                    if($result[13] == ""){
+                                                                                        echo getUserFull($db_link,$result[7]).
+                                                                                                ' <span class="label label-success">Approved</span> '; 
+                                                                                    }else{
+                                                                                        echo getUserFull($db_link,$result[7]).
+                                                                                                ' <span class="label label-warning">Rejected</span> '; 
+                                                                                    }
+
+                                                                                ?></td>
+                                                                            <?php } ?>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
                                                                 
                                                             </div>
+                                                            
                                                             
                                                             <div class="col-md-4">
                                                                 
                                                                 <table class="table table-responsive table-striped">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <th >Purpose of Trip:</th>
-                                                                        <td ><?php echo $result[6]; ?></td>
+                                                                        <th><p>Keys Status:</p></th>
+                                                                        <td >
+                                                                            <?php
+                                                                            
+                                                                                if($result[23] != "0"){
+                                                                                    echo getUserFull($db_link,$result[7]).
+                                                                                                $result[23].' <span class="label label-success">Collected</span> '; 
+                                                                                }if($result[24] != "0"){
+                                                                                    echo getUserFull($db_link,$result[7]).
+                                                                                                $result[24].' <span class="label label-success">Returned</span> ';
+                                                                                }else{
+                                                                                    echo getUserFull($db_link,$result[7]).
+                                                                                                ' <span class="label label-warning">Not Collected</span> '; 
+                                                                                }
+                                                                            ?>
+                                                                        </td>
                                                                     </tr>
                                                               </tbody></table>
+                                                                
+                                                            </div>
+                                                            
+                                                            
+                                                            <div class="col-md-4">
+                                                                
+                                                                <table class="table table-responsive table-striped">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th >Purpose of Trip:</th>
+                                                                            <td ><?php echo $result[6]; ?></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
                                                                 
                                                             </div>
                                                         </div>
@@ -233,7 +257,6 @@
                                                             ". $result[13] ." 
                                                         </div>
                                                         ";
-                                                
                                             }
                                             
                                             
@@ -246,9 +269,6 @@
                                                         
                                             echo " </div> </li>";
                                         }
-
-
-
 
 
                                         if($result[15] != ""){
@@ -294,8 +314,6 @@
                                         }
 
                                     ?>
-
-
 
                                     <li>
                                         <i class="fa fa-clock-o bg-gray"></i>
