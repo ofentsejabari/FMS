@@ -1,5 +1,4 @@
-
-          <?php 
+<?php 
 		$login = "email=admin&password=M@r@ny@n3";
 		$url = "https://whitespaces.bitri.co.bw/traccar/api/session/";
 		$ch = curl_init();
@@ -19,6 +18,6 @@
 
 		$kk = $cookies['cookie'][0];
 		header("Set-Cookie: ".$kk);
-		header("Location: tracker_home.php");
+		header("Location:https://whitespaces.bitri.co.bw/traccar/");
 	?>
 

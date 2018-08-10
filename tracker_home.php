@@ -29,8 +29,11 @@
                                             $myProfile= mysqli_fetch_row($queryResult);
 
                                         ?>
-                                    <div style="height:100%;"> 
-                                        <object type="text/html" data="https://whitespaces.bitri.co.bw/traccar/" width="100%" height="800px" style=" overflow:auto;"> </object>
+                                    <div style="width: 100%; height:100%;"> 
+                                     <iframe style="width: 100%; height:100%;" src="https://41.87.168.14">
+					<p>Your browser does not support iframes.</p>
+                                    </iframe>
+
                                     </div>
 
 	

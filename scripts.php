@@ -64,7 +64,7 @@
 <script src="assets/canvasjs/jquery.canvasjs.min.js"></script>
    
 
-
+<script src="assets/accordion.js"></script>
   
   
 

@@ -371,8 +371,44 @@
 				return false;
 			}
 
+    }
+    function getVehicleDep($db_link)
+{
+	$sql = "SELECT `vehicle_plateNumber`,`vehicle_details_amount`,`vehicle_details_purchaseDate`,`depr_rate`,`depr_inUse`,`depr_usefulLife`,`depr_salvageValue`
+	FROM `vehicle`,`vehicle_details`,`depreciation` WHERE `del`=0 and `vehicle_details`.`vehicle_id`=`vehicle`.`vehicle_id`" ;
+			$results  = mysqli_query($db_link,$sql);
+			if($results){
+				if(mysqli_num_rows($results))
+				{
+						return $results;
+				}
+			}
+
 }
     
+        function getvehicleDetailsByType($db_link,$type_id){
+	$sql = "SELECT  `vehicle_plateNumber`,`vehicle_model`
+                ,`vehicle_manufacture`,`vehicle_details_carDealer`,
+		`vehicle_details_purchaseDate`,`vehicle_details_mileage`
+                ,`vehicle_details_amount`,`vehicle_details_amount`,
+		   `vehicle_status`,`vehicle_engineType`
+                   ,`vehicle_color`,`type_id`
+                   ,`vehicle_Fuel`,`vehicle_registrationDate`
+		   ,`vehicle_chasisNumber`,`vehicle_engineNumber`
+                   ,`vehicle_details_photo`,`vehicle_year`
+                   ,`vehicle_details_purchasingOfficer`,`vehicle_trasmission`,`branch_id`
+		    FROM `vehicle`,`vehicle_details` 
+			WHERE vehicle.del=0 and `vehicle_details`.`vehicle_id`=`vehicle`.`vehicle_id` AND `type_id`=".$type_id;
+			$results  = mysqli_query($db_link,$sql);
+			if(mysqli_num_rows($results))
+			{
+			  return $results;
+			}
+			else{
+				return false;
+			}
+
+    }
     
     function getVehicleId($db_link,$plate)
 {
