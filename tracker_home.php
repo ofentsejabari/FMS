@@ -30,12 +30,9 @@
 
                                         ?>
                                     <div style="height:100%;"> 
-                                     <iframe src="https://whitespaces.bitri.co.bw/traccar/">
-									  <p>Your browser does not support iframes.</p>
-									</iframe>
+                                         <object id="map" data="https://whitespaces.bitri.co.bw/traccar/" style="min-height:900px;"  width="100%"  > </object>
 
-									 
-									 </div>
+                                    </div>
 
 	
 

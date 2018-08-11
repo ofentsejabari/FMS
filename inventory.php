@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
-	<?php include("headers.php");	?>
+	<?php 
+            include("headers.php");	
+             $page="inventory";
+             $subpage="all";
+                  
+        
+        ?>
+       
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 			
@@ -17,7 +24,7 @@
 					  </h1>
 					  <ol class="breadcrumb">
 						<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-						<li class="active">Fleet Inventory</li>
+                                                    <li class="active">Fleet Inventory</li>
 					  </ol>
 				</section>
 

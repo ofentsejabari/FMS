@@ -34,7 +34,7 @@
 }
 
 .circle {
-    border:#004276 2px solid;
+    border:#004276 10px solid;
     border-radius: 200px;
     color: #00193A;
     height: 250px;
@@ -119,7 +119,7 @@
                          ?>
                                         <div class="container">
                                            <div class="row">
-                                               <div class="col-md-5 block">
+                                               <div class="col-md-3 block">
                                                    <div class="circle">
                                                       
                                                         <div><h4>Reg No <b> <?php echo $_GET['plate']; ?> </b></h4></div>
@@ -136,12 +136,28 @@
                                                             <b> 
                                                                 <?php 
                                                                     if($vehicle[13]!=""){
-                                                                        $date = DateTime::createFromFormat("Y-m-d",$vehicle[13]);
+                                                                        $date = DateTime::createFromFormat("m/d/Y",$vehicle[13]);
                                                                         echo $date->format("M")." ".$date->format("Y");
                                                                     }    
                                                                 ?>
                                                             </b>
                                                        
+                                                   </div>
+                                               </div>
+                                               <div class="col-md-7">
+                                                   <div class="col-md-11">
+                                                            <div class="box box-info box-solid">
+                                                                 <div class="box-header with-border">
+                                                                   <h3 class="box-title">Vehicle Profile</h3>
+                                                                   <a href="addVehicleForm.php?plate=<?php echo $_GET['plate']; ?>"> <i class="fa fa-pencil "></i> <span>edit</span> </a>
+
+                                                                 </div>
+                                                                 <!-- /.box-header -->
+                                                                 <div class="box-body">
+                                                                        <?php echo " Fuel Orientation :   \\t  Fuel Orientation :  "?>
+                                                                 </div>
+                                                                 <!-- /.box-body -->
+                                                             </div>
                                                    </div>
                                                </div>
                                                
@@ -163,83 +179,15 @@
   <div class="modal" id="modal-default">
           <div class="modal-dialog ">
             <div class="modal-content col-md-12">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Add Vehicle Form</h4>
-              </div>
-              <div class="modal-body">
-                  <form>
-                                  <div class="card-body">
-                                            <div class="row">
-                                              <div class="col-md-6">
-                                                <div class="form-group">
-                                                  <label>Minimal</label>
-                                                  <select class="form-control select2" style="width: 100%;">
-                                                    <option selected="selected">Alabama</option>
-                                                    <option>Alaska</option>
-                                                    <option>California</option>
-                                                    <option>Delaware</option>
-                                                    <option>Tennessee</option>
-                                                    <option>Texas</option>
-                                                    <option>Washington</option>
-                                                  </select>
-                                                </div>
-                                                <!-- /.form-group -->
-                                                <div class="form-group">
-                                                  <label>Disabled</label>
-                                                  <select class="form-control select2" disabled="disabled" style="width: 100%;">
-                                                    <option selected="selected">Alabama</option>
-                                                    <option>Alaska</option>
-                                                    <option>California</option>
-                                                    <option>Delaware</option>
-                                                    <option>Tennessee</option>
-                                                    <option>Texas</option>
-                                                    <option>Washington</option>
-                                                  </select>
-                                                </div>
-                                                <!-- /.form-group -->
-                                              </div>
-                                              <!-- /.col -->
-                                              <div class="col-md-6">
-                                                <div class="form-group">
-                                                  <label>Multiple</label>
-                                                  <select class="form-control select2" multiple="multiple" data-placeholder="Select a State"
-                                                          style="width: 100%;">
-                                                    <option>Alabama</option>
-                                                    <option>Alaska</option>
-                                                    <option>California</option>
-                                                    <option>Delaware</option>
-                                                    <option>Tennessee</option>
-                                                    <option>Texas</option>
-                                                    <option>Washington</option>
-                                                  </select>
-                                                </div>
-                                                <!-- /.form-group -->
-                                                <div class="form-group">
-                                                  <label>Disabled Result</label>
-                                                  <select class="form-control select2" style="width: 100%;">
-                                                    <option selected="selected">Alabama</option>
-                                                    <option>Alaska</option>
-                                                    <option disabled="disabled">California (disabled)</option>
-                                                    <option>Delaware</option>
-                                                    <option>Tennessee</option>
-                                                    <option>Texas</option>
-                                                    <option>Washington</option>
-                                                  </select>
-                                                </div>
-                                                <!-- /.form-group -->
-                                              </div>
-                                              <!-- /.col -->
-                                            </div>
-                                <!-- /.row -->
-                              </div>
-                  </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" onclick="" class="btn btn-primary">Save</button>
-              </div>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add Vehicle Form</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="" class="btn btn-primary">Save</button>
+                </div>
             </div>
             <!-- /.modal-content -->
           </div>
