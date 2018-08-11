@@ -208,12 +208,10 @@ if ($_GET['status']=="updateOrganization")
 					 '".$_GET['engineType']."','".$_GET['regDate']."','".$_GET['engine']."','".$_GET['chassis']."','".$_GET['color']."','0',
 					 ".$_GET['type_id'].",".$_GET['gear_id'].")";
 					 
-				$traccar_query="INSERT INTO `devices`(`name`, `uniqueid`) 
-					 VALUES ('".$_GET['plateNumber']."','".$_GET['identifier']."')";
+				
 					 
 				$result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));
-				//$result3=mysqli_query($db_link1,$traccar_query)or die(mysqli_error($db_link1));
-			
+                                
 				if($result){
 				
 					$vehicle_id=getVehicleId($db_link,$_GET['plateNumber']);
@@ -235,7 +233,7 @@ if ($_GET['status']=="updateOrganization")
 					$query1="INSERT INTO `vehicle_details`(`vehicle_details_id`, `vehicle_id`, `vehicle_details_mileage`,
 					`vehicle_details_purchaseDate`, `vehicle_details_carDealer`, `vehicle_details_amount`, `vehicle_details_receivedBy`,
 					`vehicle_details_insuranceNo`, `vehicle_details_barcode`, `vehicle_details_photo`, `vehicle_details_purchasingOfficer`,`branch_id`)
-					VALUES (0,'".$vehicle_id."','".$_GET['mileage']."','".$_GET['pDate']."','".$_GET['dealer']."','".$_GET['amount']."',
+					VALUES (0,'".$vehicle_id."','".$_GET['mileage']."','".$_GET['pDate']."','".$_GET['dealer']."','".$_GET['purchaseAmount']."',
 					'".$_GET['user_id']."','','','','".$_GET['staffPurchase']."','".$_GET['branch']."')";
 					
 					$result1=mysqli_query($db_link,$query1)or die(mysqli_error($db_link));	
@@ -454,47 +452,33 @@ if($_GET['status']=="request"){
 */  
 
 if($_GET['status']=="updateInventory"){
-		$vehicle_id=getVehicleId($db_link,$_GET['vehicleId']);
-		$query="UPDATE `vehicle` SET `vehicle_manufacture`='".$_GET['manufacture']."',`vehicle_model`='".$_GET['model']."',
-		`vehicle_plateNumber`='".$_GET['plateNumber']."',`vehicle_year`='".$_GET['year']."',`vehicle_Fuel`='".$_GET['fuel']."',`vehicle_engineType`='".$_GET['engineType']."',
-		`vehicle_registrationDate`='".$_GET['regDate']."',`vehicle_engineNumber`='".$_GET['engine']."',`vehicle_chasisNumber`='".$_GET['chassis']."',
-		`vehicle_color`='".$_GET['color']."',`type_id`=".$_GET['type_id'].",`vehicle_trasmission`=".$_GET['gear_id']." 
-		WHERE `vehicle_id`=".$vehicle_id."";	
+    
+                    $query="UPDATE `vehicle` SET `vehicle_manufacture`='".$_GET['manufacture']."',`vehicle_model`='".$_GET['model']."',
+                    `vehicle_plateNumber`='".$_GET['plateNumber']."',`vehicle_year`='".$_GET['year']."',`vehicle_Fuel`='".$_GET['fuel']."',`vehicle_engineType`='".$_GET['engineType']."',
+                    `vehicle_registrationDate`='".$_GET['regDate']."',`vehicle_engineNumber`='".$_GET['engine']."',`vehicle_chasisNumber`='".$_GET['chassis']."',
+                    `vehicle_color`='".$_GET['color']."',`type_id`=".$_GET['type_id'].",`vehicle_trasmission`=".$_GET['gear_id']." 
+                    WHERE `vehicle_id`=".$_GET['vehicleId']."";	
+
+                    $result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));
 		
-		$result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));
-		
-		if($result){
-							
-							$smileage="";
-							if($_GET['smileage']=="")
-							{
-								$smileage=$_GET['mileage'];
-							}
-							else{
-								$smileage=$_GET['smileage'];
-							}
-							$query2="INSERT INTO `service_records`(`service_id`, `vehicle_id`, `service_date`, `service_center`, `service_type`, 
-						`service_amount`, `staff_id`,`user_id`,`service_mileage`,`date_captured`) VALUES (0,'".$vehicle_id."','".$_GET['sdate']."'
-						,'".$_GET['scenter']."','".$_GET['stype']."','".$_GET['samt']."','".$_GET['sofficer']."','".$_GET['user_id']."','".$smileage."',now())";
-						
-							$result2=mysqli_query($db_link,$query2)or die(mysqli_error($db_link));
-							
-							$query1="UPDATE `vehicle_details` SET 
-							`vehicle_details_mileage`='".$_GET['mileage']."',`vehicle_details_purchaseDate`='".$_GET['pDate']."',`vehicle_details_carDealer`='".$_GET['dealer']."',
-							`vehicle_details_amount`='".$_GET['amount']."',`vehicle_details_receivedBy`='".$_GET['user_id']."',
-							`vehicle_details_purchasingOfficer`='".$_GET['staffPurchase']."',
-							`branch_id`='".$_GET['branch']."' WHERE `vehicle_id`='".$vehicle_id."'";
-							
-							$result1=mysqli_query($db_link,$query1)or die(mysqli_error($db_link));	
-							
-							    if($result1){
-									echo "update successful \n";
-								}
-								else{
-									echo "update unsuccessful \n";
-								}
-							
-			}				
+                    if($result){
+				
+				$query1="UPDATE `vehicle_details` SET 
+				`vehicle_details_mileage`='".$_GET['mileage']."',`vehicle_details_purchaseDate`='".$_GET['pDate']."',`vehicle_details_carDealer`='".$_GET['dealer']."',
+				`vehicle_details_amount`='".$_GET['purchaseAmount']."',`vehicle_details_receivedBy`='".$_GET['user_id']."',
+				`vehicle_details_purchasingOfficer`='".$_GET['staffPurchase']."',
+				`branch_id`='".$_GET['branch']."' WHERE `vehicle_id`='".$_GET['vehicleId']."'";
+				
+				$result1=mysqli_query($db_link,$query1)or die(mysqli_error($db_link));	
+				
+				    if($result1){
+						echo "update successful \n";
+					}
+					else{
+						echo "update unsuccessful \n";
+					}
+				
+			}	
 				
 			else{
 				echo "unsuccessful \n";
@@ -574,7 +558,7 @@ if($_GET['status']=="editUser"){
                    `staff_username`='".$_GET['username']."',
                    `role_id`='".$_GET['role']."',
                    `dept_id`=".$_GET['department'].",
-                   `designation_id`=".$_GET['designation'].", 
+                   `designation_id`=".$_GET['designation']."
                     WHERE staff_id=".$_GET['user'];
 
 

@@ -65,6 +65,7 @@
    
 
 <script src="assets/accordion.js"></script>
+<script src="assets/magnific_popup/dist/jquery.magnific-popup.js"></script>
   
   
 

@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
-	<?php include("headers.php");	?>
+	<?php 
+                include("headers.php");	
+                $result= getStaffProfile($db_link,$_SESSION['fmsuser']);
+                if($result){
+                    $myProfile= mysqli_fetch_row($result);
+                }
+           ?>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 			
@@ -40,8 +46,62 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 	<!-- ./wrapper -->
+        <?php include("scripts.php");?>
+        
+        
+        <script>
+          
+  function editForm(val)
+  {
+        document.getElementById("firstname").disabled = val;
+        document.getElementById("lastname").disabled = val;
+        document.getElementById("designation").disabled = val;
+        document.getElementById("username").disabled = val;
+        document.getElementById("department").disabled = val;
+        document.getElementById("role").disabled = val;
+        document.getElementById("email").disabled = val;
+        document.getElementById("save").disabled = val;
+                    
+    }
+                
+ $('#edit').change(function() {
 
-		<?php include("scripts.php");?>
+      editForm(!$(this).prop('checked'));   
+  });
+
+  function submitForm(){
+      
+        if(document.getElementById("firstname").value!="" && document.getElementById("lastname").value!="" && document.getElementById("username").value!="" 
+           && document.getElementById("designation").value!="" && document.getElementById("department").value!="" && document.getElementById("role").value!="" 
+           && document.getElementById("role").value!="" ){
+          
+   
+                    
+                    $.ajax({
+			type : 'GET', // define the type of HTTP verb we want to use (POST for our form)
+			url : 'db_connect/validate.php?status=editUser'
+					+'&user='+document.getElementById('user').value
+					+'&lastname='+document.getElementById('lastname').value
+					+'&firstname='+document.getElementById('firstname').value
+					+'&username='+document.getElementById('username').value
+					+'&role='+document.getElementById('role').value
+					+'&department='+document.getElementById('department').value
+					+'&designation='+document.getElementById('designation').value
+                                        +'&email='+document.getElementById('email').value
+					,
+					dataType 	: 'html',
+					success		:  
+					function(data){
+                                            window.location="userProfile.php";
+                                        }
+                    });
+					
+                                       
+        }
+  }
+        </script>
 
 </body>
 </html>
+
+    

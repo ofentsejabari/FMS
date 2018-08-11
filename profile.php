@@ -21,7 +21,14 @@
                             <h5 class="description-header">
                                 <?php 
                                     $requestNo=getMyRequests($db_link,$_SESSION['fmsuser']);
-                                    $number= mysqli_num_rows($requestNo);
+                                    if($requestNo){
+                                        $number= mysqli_num_rows($requestNo);
+                                    
+                                    }
+                                    else{
+                                        $number=0;
+                                            
+                                    }
 
                                     echo $number; ?>
                             </h5>
@@ -35,7 +42,12 @@
                         <h5 class="description-header">
                             <?php
                                 $tripNo =getMyTrips($db_link,$_SESSION['fmsuser']);
-                                echo  mysqli_num_rows($tripNo);
+                                if($tripNo){    
+                                    echo  mysqli_num_rows($tripNo);
+                                }
+                                else{
+                                    echo "0";
+                                }
                             ?>
                         </h5>
                         <span class="description-text">Total Trips</span>
@@ -200,12 +212,6 @@
                 <!-- /.tab-pane -->
                 
                 
-                
-                
-
-                <div class="tab-pane" id="settings">
-              
-			  </div>
               <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->

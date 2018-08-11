@@ -48,7 +48,7 @@
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/animate.min.css">
   
-  
+  <link rel="stylesheet" href="assets/magnific_popup/dist/magnific-popup.css">
  
   
   <!-- Google Font -->
