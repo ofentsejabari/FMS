@@ -13,23 +13,18 @@
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					  <h1>
-						Fleet Inventory
+						Tracker
 					  </h1>
 					  <ol class="breadcrumb">
 						<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-						<li class="active">Fleet Inventory</li>
+						<li class="active">Tracker</li>
 					  </ol>
 				</section>
 
 				<!-- Main content -->
 				<section class="content">
-					<?php  
-                                            //
-                                            $queryResult= getStaffProfile($db_link,$_SESSION['fmsuser']);
-                                            $myProfile= mysqli_fetch_row($queryResult);
-
-                                        ?>
-                                    <div style="height:100%;"> 
+					
+                                    <div > 
                                          <object id="map" data="https://whitespaces.bitri.co.bw/traccar/" style="min-height:900px;"  width="100%"  > </object>
 
                                     </div>

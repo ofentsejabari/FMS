@@ -7,8 +7,8 @@
             <div class="box box-widget widget-user">
             <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-aqua-active">
-                    <h3 class="widget-user-username"><?php echo $_SESSION['fullname']; ?></h3>
-                    <h5 class="widget-user-desc"><?php echo $_SESSION['designation']; ?></h5>
+                    <h3 class="widget-user-username"><?php echo getUserFull($db_link,$_SESSION['fmsuser']);?></h3>
+                    <h5 class="widget-user-desc"><?php echo getUserDesignation($db_link,$_SESSION['fmsuser']); ?></h5>
                 </div>
             
                 <div class="widget-user-image">

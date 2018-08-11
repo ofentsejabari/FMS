@@ -76,8 +76,8 @@
 					 
 				</li>
 				
-				<li class="treeview">
-				  <a href="#">
+				<li class="<?php if($page=="calendar"){echo 'active';} ?>">
+                                    <a  href="tripCalendar.php">
 					<i class="fa fa-calendar"></i>
 					<span>Trip Calendar</span>
 					
@@ -92,7 +92,7 @@
 					</span>
 				  </a>
 				  <ul class="treeview-menu">
-					<li><a href="gateLogs.php"><i class="fa fa-circle-o"></i> Gate logs</a></li>
+					<li class="<?php if($page=="gate"){echo 'active';} ?>"><a href="gateLogs.php"><i class="fa fa-circle-o"></i> Gate logs</a></li>
 					<li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
 					<li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
 				  </ul>
