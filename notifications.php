@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-    <?php include("headers.php"); ?>
+    <?php 
+        include("headers.php");
+        $page="request";
+    ?>
     
     <body class="hold-transition skin-blue sidebar-mini">
 
@@ -53,21 +56,22 @@
 
                                       <!-- Fleet Officer -->
                                       <li ><a href="fleetrequests.php"><i class="fa fa-filter"></i> Fleet Request 
-
-                                                    <?php 
-                                                    $result = getRequestHistory($db_link); 
-                                                    $unread = 0;
-                                                    if($result){
-                                                        echo '<span class="label label-warning pull-right">';
-                                                        while($row = mysqli_fetch_row($result)){
-                                                            if($row[13] == "0"){
-                                                                $unread+=1;                    
-                                                            }
+                                            
+                                                <?php 
+                                                $result = getRequestHistory($db_link); 
+                                                $unread = 0;
+                                                if($result){
+                                                    
+                                                    while($row = mysqli_fetch_row($result)){
+                                                        if($row[9] == "0"){
+                                                            $unread+=1;                    
                                                         }
-
-                                                        echo $unread."</span>"; 
-
-                                                    }?></a> </li>
+                                                    }
+                                                    if($unread > 0){
+                                                        echo '<span class="label label-warning pull-right">'.$unread."</span>";
+                                                    }
+                                                
+                                                }?></a> </li>
                                       <li><a href="myrequests.php"><i class="fa fa-envelope-o"></i> My Request</a></li>
 
                                       <!-- Supervisour -->

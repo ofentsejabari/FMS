@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-	<?php include("headers.php"); ?>
+	<?php 
+            include("headers.php"); 
+            $page="request";
+        ?>
     
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -53,20 +56,21 @@
                                   <!-- Fleet Officer -->
                                   <li ><a href="fleetrequests.php"><i class="fa fa-filter"></i> Fleet Request 
                                             
-                                        <?php 
-                                        $result = getRequestHistory($db_link); 
-                                        $unread = 0;
-                                        if($result){
-                                            echo '<span class="label label-warning pull-right">';
-                                            while($row = mysqli_fetch_row($result)){
-                                                if($row[13] == "0"){
-                                                    $unread+=1;                    
-                                                }
-                                            }
-                                        
-                                            echo $unread."</span>"; 
-                                        
-                                        }?></a> </li>
+                                                <?php 
+                                                $result = getRequestHistory($db_link); 
+                                                $unread = 0;
+                                                if($result){
+                                                    
+                                                    while($row = mysqli_fetch_row($result)){
+                                                        if($row[9] == "0"){
+                                                            $unread+=1;                    
+                                                        }
+                                                    }
+                                                    if($unread > 0){
+                                                        echo '<span class="label label-warning pull-right">'.$unread."</span>";
+                                                    }
+                                                
+                                                }?></a> </li>
                                   
                                   <li class="active"><a href="myrequests.php"><i class="fa fa-envelope-o"></i> My Request</a></li>
                                 
@@ -99,8 +103,8 @@
 
                               <div class="box-body no-padding">
                                   <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#"><i class="fa fa-circle text-red"></i> Cancelled</a></li>
-                                    <li><a href="#"><i class="fa fa-circle text-maroon"></i> Rejected </a></li>
+                                    <li><a href="#"><i class="fa fa-circle text-aqua"></i> Cancelled</a></li>
+                                    <li><a href="#"><i class="fa fa-circle text-red"></i> Rejected </a></li>
                                     <li><a href="#"><i class="fa fa-circle text-yellow"></i> Pending </a></li>
                                     <li><a href="#"><i class="fa fa-circle text-green"></i> Approved </a></li>
                                     <li><a href="#"><i class="fa fa-circle text-blue"></i> Complete </a></li>
@@ -185,7 +189,7 @@
                                                     $diff = date_diff($date2,$date1);
 
                                                     if($diff -> format("%a")>= 1){
-                                                        $val = $diff -> format("%a days ago");
+                                                        $val = $diff -> format("%a day(s) ago");
 
                                                     }else{
                                                         if($diff -> format("%h") < 1){
@@ -203,12 +207,12 @@
                                                     if($row[16] == "" || $row[15] == ""){$fm = "text-yellow";}
                                                     if($row[24] == "1"){$fm = "text-blue";}
 
-                                                    if($row[22] != "0"){$fm = "text-red";}
+                                                    if($row[22] != "0"){$fm = "text-aqua";}
 
-                                                    if(strlen($row[13]) > 0 || strlen($row[25]) > 2){$fm = "text-maroon";}
+                                                    if(strlen($row[13]) > 0 || strlen($row[25]) > 2){$fm = "text-red";}
 
-                                                    echo"<tr>   <td class='mailbox-star'><a href='#'><i class='fa fa-circle ".$fm."'></i></a></td>
-                                                                <td class='mailbox-name'>".$row[10]." - ".$row[11]."</td>
+                                                    echo"<tr>   <td class='mailbox-star' style='width:5%;'><a href='#'><i class='fa fa-circle ".$fm."'></i></a></td>
+                                                                <td class='mailbox-name' style='width:20%;'>".$row[10]." - ".$row[11]."</td>
 
                                                                 <td class='mailbox-date'><a href='viewrequest.php?id=".$row[1]."'"
                                                                  . " From <b>".strtoupper(getBranchName($db_link,$row[26]))."</b>"
