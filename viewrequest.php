@@ -164,11 +164,15 @@
                                                                             <?php
                                                                             
                                                                                 if($result[23] != "0"){
-                                                                                    echo getUserFull($db_link,$result[7]).'<br>'.
+                                                                                    
+                                                                                    if($result[24] != "0"){
+                                                                                        echo getUserFull($db_link,$result[7]).'<br>'.
+                                                                                                    $result[24].' <span class="label label-warning">Returned</span> ';
+                                                                                    }else{
+                                                                                        
+                                                                                        echo getUserFull($db_link,$result[7]).'<br>'.
                                                                                                 $result[23].' <span class="label label-success">Collected</span> '; 
-                                                                                }else if($result[24] != "0"){
-                                                                                    echo getUserFull($db_link,$result[7]).'<br>'.
-                                                                                                $result[24].' <span class="label label-success">Returned</span> ';
+                                                                                    }
                                                                                 }else{
                                                                                     echo getUserFull($db_link,$result[7]).'<br>'.
                                                                                                 ' <span class="label label-warning">Not Collected</span> '; 
@@ -440,7 +444,7 @@
                             
                             <div class="modal-footer">
                                 <!--<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>-->
-                                <button type="button" class="btn btn-primary" onclick="returnKeyreturnKey('<?php echo $result[1] ?>')">Continue</button>
+                                <button type="button" class="btn btn-primary" onclick="returnKey('<?php echo $result[1] ?>', '<?php echo $result[3] ?>')">Continue</button>
                             </div>
                             
                         </div>
@@ -795,14 +799,13 @@
         }
 
 
-        function returnKey(request_id){
-            
-            alert('db_connect/validate.php?status=return&request_id='+request_id)
-            
+        function returnKey(request_id, vehicle_id){
+                        
             var formData = $(this).serialize();
             $.ajax({
                 type: 'GET',
-                url: 'db_connect/validate.php?status=return&request_id='+request_id,
+                url: 'db_connect/validate.php?status=return&request_id='+request_id
+                +'&vehicle_id='+vehicle_id,
                 data: formData,
                 dataType: 'html',
                 success: function(data){ window.location = "viewrequest.php?id=" + request_id; }
