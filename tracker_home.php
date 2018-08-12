@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
-	<?php include("headers.php");	?>
+	<?php include("headers.php");
+            $page="tracker";
+        ?>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 			
@@ -25,7 +27,7 @@
 				<section class="content">
 					
                                     <div > 
-                                         <object id="map" data="https://whitespaces.bitri.co.bw/traccar/" style="min-height:900px;"  width="100%"  > </object>
+                                         <object id="map" data="https://whitespaces.bitri.co.bw/" style="min-height:900px;"  width="100%"  > </object>
 
                                     </div>
 

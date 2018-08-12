@@ -77,8 +77,6 @@
          
 		<ul class="nav nav-tabs">
                     <li class="active"><a href="#account" data-toggle="tab">Account</a></li>
-                    <li><a href="#request" data-toggle="tab">My Requests</a></li>
-                    <li><a href="#settings" data-toggle="tab">My Stats</a></li>
                 </ul>
 			
             <div class="tab-content">

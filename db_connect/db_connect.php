@@ -3,9 +3,9 @@
 
     function db_connect()
     {
-                    $username="sms";
-                    $address="192.168.100.77";
-                    $password="sms12345";
+                    $username="root";
+                    $address="127.0.0.1";
+                    $password="";
                     $db="bitri_fms";
 
                     $db_link = mysqli_connect($address,$username,$password,$db);
