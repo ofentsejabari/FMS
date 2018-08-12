@@ -53,14 +53,14 @@
                                                 <i class="fa fa-angle-down pull-right"></i>
                                             </a>
                                         </div>
-                                        <div id="collapse<?php echo $row[0]?>" class="panel-collapse collapse out">
+                                        <div id="collapse<?php echo $row[0]?>" class="panel-collapse collapse ">
                                             <div class="box-body">  
                                                 <?php 
                                                     $result1= getvehicleDetailsByType($db_link, $row[0]);
                                                     if ($result1){
                                                             while($row1= mysqli_fetch_row($result1)){
 
-                                                                echo "<a href='?plate=$row1[0]'>".$row1[0]." </a>";
+                                                                echo "<a href='?plate=$row1[0]'><p>".$row1[0]." </p></a>";
 
                                                             }
                                                     }
@@ -114,15 +114,43 @@
                                                      <ul class="nav nav-stacked">
                                                          <li><a href="#">Reg. valid until end of:<span class="pull-right badge bg-green">
                                                                <?php 
+                                                               
                                                                    if($vehicle[13]!=""){
-                                                                       $date = DateTime::createFromFormat("m/d/Y",$vehicle[13]);
-                                                                       echo $date->format("M")." ".$date->format("Y");
+                                                                       if(strpos($vehicle[13], '/')){
+
+                                                                            $date = DateTime::createFromFormat("m/d/Y",$vehicle[13]);
+                                                                            echo $date->format("M")." ".$date->format("Y");
+                                                                       }
+                                                                       else{
+                                                                           
+                                                                            $date = DateTime::createFromFormat("Y-m-d",$vehicle[13]);
+                                                                            echo $date->format("M")." ".$date->format("Y");
+                                                                           
+                                                                       }
                                                                    }    
                                                                ?>
                                                                </span></a></li>
                                                        <li><a href="#">Mileage <span class="pull-right badge bg-aqua"><?php echo $vehicle[5]; ?> km</span></a></li>
                                                      
-                                                       <li><a href="#">Total Trips <span class="pull-right badge bg-blue">31</span></a></li>
+                                                       <li>
+                                                           <a href="#">Total Trips 
+                                                               <span class="pull-right badge bg-blue">
+                                                                   <?php 
+                                                                   
+                                                                        $res= getVehicleTotalUseNo($db_link, $vehicle_id);
+                                                                        if($res){ 
+                                                                            echo $res;
+                                                                            
+                                                                        } 
+                                                                        else{
+                                                                            
+                                                                            echo "0";
+                                                                        }
+                                                                        
+                                                                        ?>
+                                                               </span>
+                                                           </a>
+                                                       </li>
                                                        <li> <a href="addVehicleForm.php?plate=<?php echo $_GET['plate']; ?>"> <i class="fa fa-pencil "></i> <span>edit</span> </a></li>
                                                      </ul>
                                                    </div>

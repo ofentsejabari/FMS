@@ -575,6 +575,19 @@
                     }
     }
     
+    function getVehicleTotalUseNo($db_link,$vehicle_id){
+	$sql="SELECT count(*) FROM `request` WHERE request_cancelled=0 AND vehicle_id=".$vehicle_id;
+	$results=mysqli_query($db_link,$sql);
+	if($results){
+			if(mysqli_num_rows($results))
+				{
+					$data=mysqli_fetch_row($results);
+					return $data[0];
+				}
+	}
+	
+}
+    
     function isKeyCollected($db_link,$request_id){
 		$query="SELECT `request_keyCollectiondate`,`request_keyReturnDate`
 	         FROM `request`
