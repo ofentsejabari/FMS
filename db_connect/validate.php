@@ -24,6 +24,8 @@ if($_GET['status']=="approval"){
 			,`request_approval_date`=now(), `request_approval_note`='".$_GET['note']."'
 			WHERE `request_id`=".$_GET['request_id'];
 			
+                        $result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));
+                        
 			$resultSet=getRequestDetails($db_link,$_GET['request_id']);
 			
 			$query2="INSERT INTO `jqcalendar`(`Id`, `Subject`, `Location`, `Description`, `StartTime`, `EndTime`, `IsAllDayEvent`, `Color`, `RecurringRule`) 
@@ -31,7 +33,7 @@ if($_GET['status']=="approval"){
 			
 			$result1=mysqli_query($db_link,$query2)or die(mysqli_error($db_link));
 		
-			$result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));
+			
 			
 			if($result){
 				echo "successfull";	
@@ -591,7 +593,7 @@ if($_GET['status']=="supervisor_approval")
 {
 	 
 				  $query="UPDATE `request` 
-				  		SET `request_supervisor_id`=".$_GET['user_id']." ,`request_supervisor_date`=now() 
+				  		SET `request_supervisor_id`=".$_GET['user_id']." ,`request_supervisor_date` = now() 
 				  		WHERE request_id=".$_GET['request_id'];
 						
 					$result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));	
@@ -629,10 +631,6 @@ if($_GET['status']=="supervisor_approval")
 					else{
 						echo "Unsuccessful";
 					}
-}
-if($_GET['status']=="cancel"){
-
-
 }
 
 if($_GET['status']=="cancel")
@@ -674,67 +672,52 @@ if($_GET['status']=="cancel")
 					}
 }
 
-if($_GET['status']=="collection")
-{					
-					//check if the car is available first
-			$vehicle_id=getRequestVehicleId($db_link,$_GET['request_id']);
-			$sql_query="SELECT `vehicle_status` FROM `vehicle` WHERE vehicle_id=".$vehicle_id;
-			$sql_result=mysqli_query($db_link,$sql_query)or die(mysqli_error($db_link));
-			
-			if(mysqli_num_rows($sql_result))
-			{
-				$data=mysqli_fetch_row($sql_result);
-				
-				if($data[0]==1)
-				{
-							echo "vehicle not available at the moment";
-				}
-				else{
-									
-	                $query="UPDATE `request` 
-				  		SET request_keyCollectiondate=now()
-				  		WHERE `request_id`=".$_GET['request_id'];
+if($_GET['status']=="collection"){					
 					
-						
-					$result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));	
-					if($result){
-						//update vehicle status
-						$query1="UPDATE `vehicle` SET `vehicle_status`=1 WHERE vehicle_id=".$vehicle_id;
-						$result1=mysqli_query($db_link,$query1)or die(mysqli_error($db_link));
-						
-						
-						$result=getRequestDetails($db_link,$_GET['request_id']);
-						$to=getUser($db_link,$result[6]);
-						$to1=getUser($db_link,$result[0]);
-						$subject="FMS: VEHICLE REQUEST";
-								$message="Request Details"
-								."\n"
-								."__________________________________________"
-								."\n"
-								."Status: ***VEHICLE COLLECTED****  "
-								."\n"
-								."Employee : ".getUserFull($db_link,$result[0])
-								."\n Destination :".$result[1]
-								."\n Trip start:".$result[2]
-								."\n Trip End:".$result[3]
-								."\n Reason :".substr($result[4],3,-4)
-								."\n"
-								."Access system : http://whitespaces.bitri.co.bw/fms/"
-								.""
-								;
-								
-						emailSender1($to,$to1,$subject,$message);
-						
-						echo "<p >success</strong></p>";
-
-						
-					}
-					else{
-						echo "Unsuccessful";
-					}
-				}
-				}
+        $query="UPDATE `request` SET request_keyCollectiondate=now()
+		WHERE `request_id`=".$_GET['request_id'];
+			
+				
+       $result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));	
+	if($result){
+		//update vehicle status
+		$query1="UPDATE `vehicle` SET `vehicle_status`=1 WHERE vehicle_id=".$vehicle_id;
+		$result1=mysqli_query($db_link,$query1)or die(mysqli_error($db_link));
+		
+		
+		$result=getRequestDetails($db_link,$_GET['request_id']);
+		$to=getUser($db_link,$result[6]);
+		$to1=getUser($db_link,$result[0]);
+		$subject="FMS: VEHICLE REQUEST";
+				$message="Request Details"
+				."\n"
+				."__________________________________________"
+				."\n"
+				."Status: ***VEHICLE COLLECTED****  "
+				."\n"
+				."Employee : ".getUserFull($db_link,$result[0])
+				."\n Destination :".$result[1]
+				."\n Trip start:".$result[2]
+				."\n Trip End:".$result[3]
+				."\n Reason :".substr($result[4],3,-4)
+				."\n"
+				."Access system : http://whitespaces.bitri.co.bw/fms/"
+				.""
+				;
+				
+		emailSender1($to,$to1,$subject,$message);
+		
+		echo "<p >success</strong></p>";
+	}
+	else{
+		echo "Unsuccessful";
+	}
 }
+
+
+
+
+
 if($_GET['status']=="return")
 {
 	                $query="UPDATE `request`
@@ -781,7 +764,7 @@ if($_GET['status']=="return")
 if($_GET['status']=="supervisorReject"){
 
 				$query="UPDATE `request` 
-							SET `request_supervisorRejectReason`='".$_GET['reason']."'
+							SET `request_supervisorRejectReason`='".$_GET['reason']."', `request_supervisor_date` = now()
 							WHERE `request_id`=".$_GET['request_id'];
 							
 						$result=mysqli_query($db_link,$query)or die(mysqli_error($db_link));	

@@ -118,26 +118,54 @@
     
     function getRequestHistory($db_link){
         
-            $sql = "SELECT `vehicle_id`, CONCAT_WS(' ',`staff_firstname`,`staff_surname`)
+            $sql = "SELECT `vehicle_id`, CONCAT_WS(' ',`staff_firstname`,`staff_surname`) 
                ,`request_date`,`request`.`start_date`
                ,`end_date`,`request_destination`
                ,`request_reason`,`request_level`
                ,`request_travellers`,`request_approver_id`
-            ,`request_approval_date`,`request_id`
+               ,`request_approval_date`,`request_id`
                ,`request_rejectReason`,`request_view`
                ,`request_vehicle_transmission`,type_id
                ,`request_cancelled`,`request`.`branch_id`
-            ,`designation_id`,`dept_id`
-               ,`request_driver`
+               ,`designation_id`,`dept_id`
+               ,`request_driver`, `request_supervisor_id`
                FROM `request`,`staff`
             WHERE `staff`.`staff_id`=`request`.`staff_id` 
-            and (request_supervisor_date!='' || role_id=7 || role_id=5 || role_id=6 ) and request_supervisor_reason='' ORDER BY request_date DESC LIMIT 60 "  ;
+            and (request_supervisor_date!='' || role_id=7 || role_id=5 || role_id=6 ) and request_supervisorRejectReason='\'\'' ORDER BY request_date DESC LIMIT 60 "  ;
 
             $results  = mysqli_query($db_link,$sql);
             if(mysqli_num_rows($results))
             {
                     return $results;
             }
+    }
+    
+    
+    function getRequestVehicleId($db_link,$request_id){
+        
+	$query="SELECT `vehicle_id` FROM request WHERE request_id=".$request_id;
+        $results  = mysqli_query($db_link,$query);
+                
+	if(mysqli_num_rows($results)){
+            $data=mysqli_fetch_row($results);
+            return $data[0];
+	}
+    }
+    
+    function  getVehicleStatus($db_link,$vehicle_id){
+	$query = "SELECT `vehicle_status` FROM `vehicle` WHERE vehicle_id=".$vehicle_id;
+        
+        $results  = mysqli_query($db_link,$query);
+        if(mysqli_num_rows($results)){
+            $data = mysqli_fetch_row($results);
+            if($data[0] == "0"){
+                
+                return TRUE;
+            }else{
+                
+                return FALSE;
+            }
+	}
     }
     
     //====================================== BRANCH DETAILS ========================================================
@@ -396,7 +424,7 @@
                    ,`vehicle_Fuel`,`vehicle_registrationDate`
 		   ,`vehicle_chasisNumber`,`vehicle_engineNumber`
                    ,`vehicle_details_photo`,`vehicle_year`
-                   ,`vehicle_details_purchasingOfficer`,`vehicle_trasmission`,`branch_id`
+                   ,`vehicle_details_purchasingOfficer`,`vehicle_trasmission`,`branch_id`, `vehicle_id`
 		    FROM `vehicle`,`vehicle_details` 
 			WHERE vehicle.del=0 and `vehicle_details`.`vehicle_id`=`vehicle`.`vehicle_id` AND `type_id`=".$type_id;
 			$results  = mysqli_query($db_link,$sql);
@@ -409,6 +437,20 @@
 			}
 
     }
+    
+    
+    function getAvailableCars($db_link,$car_typeId,$branch_id){
+        
+	$sql="SELECT `vehicle_plateNumber`,`vehicle`.`vehicle_id`,`vehicle_trasmission`
+	 FROM `vehicle`,`vehicle_details`
+	 WHERE vehicle_status='0' and del=0 and type_id=".$car_typeId." and `vehicle_details`.`vehicle_id`=`vehicle`.`vehicle_id` and `branch_id`=".$branch_id;
+	$results  = mysqli_query($db_link,$sql);
+	if(mysqli_num_rows($results))
+	{
+		return $results;
+	}
+}
+    
     
     function getVehicleId($db_link,$plate)
 {
@@ -515,7 +557,37 @@
             `request_driver`, `key_return_reminder`
             FROM `request`,`staff`
             WHERE `staff`.`staff_id`=`request`.`staff_id` 
-            AND `request`.`staff_id`=".$staff_id;
+            AND `request`.`staff_id`=".$staff_id. " ORDER BY `request_id` DESC";
+        	
+	$results  = mysqli_query($db_link,$query);
+	if($results){
+            if(mysqli_num_rows($results)){
+                return $results;
+            }
+	}
+    }
+    
+    function getMyAssignedRequestHistory($db_link,$staff_id){
+        
+	$query = "SELECT CONCAT_WS(' ', `staff_firstname`,`staff_surname`) AS 
+            `fullname`, `request_id`,
+            `staff`.`staff_id`, `vehicle_id`,
+            `request_date`, `request_destination`,
+            `request_reason`, `request_approver_id`,
+            `request_supervisor_id`, `request_level`,
+            `start_date`, `end_date`,
+            `request_view`, `request_rejectReason`, 
+            `request_travellers`, `request_approval_date`,
+            `request_supervisor_date`, `request_closure`,
+            `request_vehicle_transmission`, `type_id`,
+            `request_duty_nature`, `request_supervisor_reason`, 
+            `request_cancelled`, `request_keyCollectiondate`,
+            `request_keyReturnDate`, `request_supervisorRejectReason`,
+            `branch_id`, `request_approval_note`, 
+            `request_driver`, `key_return_reminder`
+            FROM `request`,`staff`
+            WHERE `staff`.`staff_id`=`request`.`staff_id` 
+            AND `request_supervisor_id`=".$staff_id. " ORDER BY `request_id` DESC";
         	
 	$results  = mysqli_query($db_link,$query);
 	if($results){
@@ -545,7 +617,7 @@
                 `request_driver`, `key_return_reminder`
                 FROM `request`,`staff`
                 WHERE `staff`.`staff_id`=`request`.`staff_id` 
-                AND `request`.`request_id`=".$requestID;
+                AND `request`.`request_id`=".$requestID . " ORDER BY `request_id` DESC";
  
 	$results  = mysqli_query($db_link,$query);
         

@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
     <?php 
-            include("headers.php");
-            $page="request";
-        
-        ?>
+        include("headers.php");
+        $page="request";
+    ?>
 <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   
 <body class="hold-transition skin-blue sidebar-mini">
@@ -401,10 +400,7 @@ $('#requestForm').submit(function(event) {
                             +'&vehicleType='+document.getElementById("vehicleType").value
                             ,
                             dataType 	: 'html',
-                            success		:  
-                            function(data){
-                                   $("#modal-success").modal();
-                            }
+                            success: function(data){ window.location = "myrequests.php"; }
                     });
 					
                                        

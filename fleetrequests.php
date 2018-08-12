@@ -3,7 +3,6 @@
     <?php 
         include("headers.php");
         $page="request";
-
     ?>
     
     
@@ -63,14 +62,6 @@
                                 
                                 <ul class="nav nav-pills nav-stacked">
                                     
-                                    <li><a href="notifications.php"><i class="fa fa-inbox"></i> Notifications
-                                    <span class="label label-primary pull-right">12</span></a></li>
-
-                                    <li><a href="myrequests.php"><i class="fa fa-envelope-o"></i> My Request</a></li>
-
-                                    <!-- Supervisor -->
-                                    <li><a href="triprequests.php"><i class="fa fa-file-text-o"></i> Trip Requests </a></li>
-
                                     <!-- Fleet Officer -->
                                     <li class="active"><a href="fleetrequests.php"><i class="fa fa-filter"></i> Fleet Request 
                                             
@@ -78,16 +69,26 @@
                                                 $result = getRequestHistory($db_link); 
                                                 $unread = 0;
                                                 if($result){
-                                                    echo '<span class="label label-warning pull-right">';
+                                                    
                                                     while($row = mysqli_fetch_row($result)){
-                                                        if($row[13] == "0"){
+                                                        if($row[9] == "0"){
                                                             $unread+=1;                    
                                                         }
                                                     }
-                                                
-                                                    echo $unread."</span>"; 
+                                                    if($unread > 0){
+                                                        echo '<span class="label label-warning pull-right">'.$unread."</span>";
+                                                    }
                                                 
                                                 }?></a> </li>
+                                    
+
+                                    <li><a href="myrequests.php"><i class="fa fa-envelope-o"></i> My Request</a></li>
+
+                                    <!-- Supervisor -->
+                                    <li><a href="triprequests.php"><i class="fa fa-file-text-o"></i> Trip Requests </a></li>
+
+                                    <li><a href="notifications.php"><i class="fa fa-inbox"></i> Notifications
+                                    <span class="label label-primary pull-right">12</span></a></li>
                                             
                                 </ul>
                                 
@@ -113,8 +114,8 @@
 
                               <div class="box-body no-padding">
                                   <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#"><i class="fa fa-circle text-aqua"></i> Unread </a></li>
-
+                                    <li><a href="#"><i class="fa fa-circle text-aqua"></i> Unprocessed </a></li>
+                                    <li><a href="#"><i class="fa fa-check text-green"></i> Processed </a></li>
                                   </ul>
                               </div>
                             <!-- /.box-body -->
@@ -139,61 +140,64 @@
                                 <table id="requests" class="table table-bordered table-striped">
 
                                     <thead>
-                                        <tr>
-                                            <th> - </th>
-                                            <th> </th>
-                                            <th> </th>
-                                            <th> </th>
-                                            <th > </th>
-                                        </tr>
+                                           <tr>
+                                               
+                                               <th style='width:5%'> - </th>
+                                               <th style='width:15%'> </th>
+                                               <th> </th>
+                                               <th> </th>
+                                           </tr>
                                     </thead>
 
                                     <tbody>
-                                        <?php  
+                                        <?php 
+                                        
                                             $result = getRequestHistory($db_link);
                                             if($result){
-                                            while($row = mysqli_fetch_row($result)){
-                                                
-                                                $date1 = date_create(date(""));
-                                                $date2 = date_create($row[2]);
-                                                $val="";
-                                                $diff = date_diff($date2,$date1);
-                                                
-                                                if($diff -> format("%a")>= 1){
-                                                    $val = $diff -> format("%a days ago");
-                                                }
-                                                else{
-                                                    if($diff -> format("%h") < 1){
-                                                        $val = $diff -> format("%i mins ago");
+                                                while($row = mysqli_fetch_row($result)){
+
+                                                    $date1 = date_create(date(""));
+                                                    $date2 = date_create($row[2]);
+                                                    $val = "";
+                                                    $diff = date_diff($date2,$date1);
+
+                                                    if($diff -> format("%a")>= 1){
+                                                        $val = $diff -> format("%a days ago");
                                                     }
                                                     else{
-                                                        $val = $diff -> format("%h hours ago");
+                                                        if($diff -> format("%h") < 1){
+                                                            $val = $diff -> format("%i mins ago");
+                                                        }
+                                                        else{
+                                                            $val = $diff -> format("%h hours ago");
+                                                        }
                                                     }
-                                                }
-                                                
-                                                if($row[13] == "0"){
-                                                    echo " <tr>
-                                                         <td class='mailbox-star'><a href='#'><i class='fa fa-circle text-aqua'></i></a></td>
-                                                         <td class='mailbox-name'>".$row[1]."</a></td>
-                                                         <td class='mailbox-subject'><a href='viewrequest.php?id=".$row[0]."'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
-                                                         <td class='mailbox-date'>".$val."</td>
-                                                         <td class='mailbox-date'>closed</td>
-                                                     </tr>";
-                                                }else{
                                                     
-                                                    echo " <tr>
-                                                         <td class='mailbox-star'><a href='#'></i></a></td>
-                                                         <td class='mailbox-name'>".$row[1]."</a></td>
-                                                         <td class='mailbox-subject'><a href='viewrequest.php?id=".$row[0]."'><b>".$row[3]."</b> - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
-                                                         <td class='mailbox-date'>".$val."</td>
-                                                         <td class='mailbox-date'>open</td>    
-                                                     </tr>";
+                                                    
+                                                    if($row[9] == "0"){
+                                                        echo"<tr>
+                                                                 <td class='mailbox-star'><a href='#'><i class='fa fa-circle text-aqua'></i></a></td>
+                                                                 <td class='mailbox-name'>".$row[1]."</td>
+                                                                 <td class='mailbox-subject'><a href='viewrequest.php?id=".$row[11]."'><b>".$row[3]."</b>"
+                                                                . " - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
+                                                                 <td class='mailbox-date'>".$val."</td>
+                                                                </tr>";
+                                                    }else{
+                                                        echo"<tr>
+                                                                    <td class='mailbox-star'><a href='#'><i class='fa fa-check text-green'></i></a></td>
+                                                                    <td class='mailbox-name'>".$row[1]."</td>
+                                                                    <td class='mailbox-subject'><a href='viewrequest.php?id=".$row[11]."'><b>".$row[3]."</b>"
+                                                                        . " - From <b>".strtoupper(getBranchName($db_link,$row[17]))."</b> to  <b>".strtoupper($row[5])."</b> </a></td>
+                                                                    <td class='mailbox-date'>".$val."</td>   
+                                                                </tr>";
+                                                    }
+
+                                                    
                                                 }
                                             }
-                                            }
-                                       ?>               
+                                       ?>
+                                           
                                     </tbody>
-                                    
                                 </table>
                             </div>
                             <!-- /.box-body -->
@@ -230,16 +234,8 @@
     
     <script>
         $(document).ready(function() {
-        $('#requests').DataTable( {
-            "columnDefs": [
-                {
-                    "targets": [ 4 ],
-                    "visible": false,
-                    "searchable": true
-                }
-            ]
-        } );
-    } );
+            $('#requests').DataTable({});
+        });
     </script>
     
 
